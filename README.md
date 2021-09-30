@@ -1,13 +1,9 @@
-# Peg_Solitaire
-HPDM139 Assignment 1
+<img src="https://cdn.freelogovectors.net/wp-content/uploads/2020/01/university-of-exeter-logo.png" alt="Univeristy of Exeter Logo" width="100"/>
 
-
-<img src="https://bit.ly/2VnXWr2" alt="Ironhack Logo" width="100"/>
-
-# The Business Benefits of Process Improvements & Implementation of Recommender Systems
+# HPDM139 Assignment 1 - Peg Solitaire
 *Elliott Coyne*
 
-*Data Analytics, Barcelona, December 2019*
+*MSc Health Data Science 2021/2 Cohort*
 
 ## Content
 - [Project Description](#project-description)
@@ -22,7 +18,7 @@ HPDM139 Assignment 1
 - [Organization](#organization)
 - [Links](#links)
 
-## Project Description
+## Assignment Description
 The purpose of this task is to emulate the work of a business consultant who has been engaged by a venture capital group who are considering whether or not to purcahse the UK based online retailer 'Alpine Online'. Part of this due dilligence exercise is to identify opportunities for improvement within the business. Strategies to be explored include the implementation of a recommender system to increase sales for both regular and business customers (based on their purchasing habits), clustering/ categorizing of customers to increase personalisation of communications with them, as well as an analysis of customer returns and the potential impact on cash flow and employee workload.
 
 ## Questions
@@ -72,12 +68,12 @@ The respository root folder has one main working directory, 'your-project' which
 
 ## Links
 Please find all relevant links for this project below:
-[Repository](https://github.com/tristar82/Project-Week-8-Final-Project)
-[Slides](https://docs.google.com/presentation/d/1GSYmX9WHKzriCXHyuFMpeT_GYxb0U7cIRgJcrQmdu30/edit?usp=sharing)
-[Trello](https://trello.com/b/3icjIHgb/final-project-ironhack-bcn)
+*[Repository](https://github.com/tristar82/Project-Week-8-Final-Project)
+*[Slides](https://docs.google.com/presentation/d/1GSYmX9WHKzriCXHyuFMpeT_GYxb0U7cIRgJcrQmdu30/edit?usp=sharing)
+*[Trello](https://trello.com/b/3icjIHgb/final-project-ironhack-bcn)
 **Data Source**
-[UCI****] Dataset downloaded from (https://archive.ics.uci.edu/ml/datasets/Online+Retail+II)
+*[UCI****] Dataset downloaded from (https://archive.ics.uci.edu/ml/datasets/Online+Retail+II)
 **Libraries Required to Run Code**
-[Plotly](https://plot.ly/python/v3/ipython-notebooks/cufflinks/)
-[GeoPy](https://geopy.readthedocs.io/en/stable/)
+*[Plotly](https://plot.ly/python/v3/ipython-notebooks/cufflinks/)
+*[GeoPy](https://geopy.readthedocs.io/en/stable/)
 
