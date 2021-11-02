@@ -101,8 +101,8 @@ class Peg:
 
     def verify_input_char(self, input_char, peg_dict, location):
         '''
-        Determines the board coordinates of a character.
-        Includes error handling in case the character entered is not present on the board
+        Function to verify if a character peg position is valid and has a corresponding set of peg coordinates.
+        Includes error handling in case that the an invalid (non-existing) peg character is entered by the user.
 
         Parameters
         ----------
@@ -110,16 +110,16 @@ class Peg:
             Single alpha character (a-p,A-P,x)
 
         peg_dict: str
-            Name of variable containing dictionary with character to position coords lookup
+            Name of dictionary variable containing the character to position coords lookup
 
         location: str
-            String to indentify if the position entered is the origin or destination
+            String to indentify if the position entered is the origin or destination. Used for more descriptive error messages
 
         Returns
         -------
         results: tuple of 2 elements
-            Element 1 (index 0) is a list with the coordinates of the character entered, in the formar [row,col]
-            Element 2 (index 1) is the final character selected (as may be different due to error handling)
+            Element 1 (index 0) is a list with the coordinates of the character entered, in the format [row,col]
+            Element 2 (index 1) is the final character selected (as may be different as the input character, due to error handling)
         '''
         while input_char not in peg_dict.keys():
             input_char = input(
