@@ -174,9 +174,9 @@ class Board:
         self.board = [[not row == ele == 3 if ele in [2, 3, 4] or row in [2, 3, 4] else None for row in range(7)] for
                       ele in range(7)]
 
-        # Get peg chars
+        # Generate a list of characters to represent peg positions (a-p,x,P-A)
         a_to_p = [chr(i) for i in range(97, 113)]
-        self.peg_chars = a_to_p + [chr(120)] + [i.upper() for i in a_to_p[::-1]]
+        self.peg_chars = a_to_p + ['x'] + [i.upper() for i in a_to_p[::-1]]
 
         # generate char to coordinates lookup dictionary
         peg_pos_idx = 0
@@ -195,25 +195,6 @@ class Board:
 
         # Create a dictionary that determines
         self.direction_dict = {'U': [-1, 0], 'D': [1, 0], 'L': [0, -1], 'R': [0, 1]}        
-
-    # def character_lookup(self):
-    #     '''
-    #     Purpose of this XXX is to create the dictionary of position characters to board coordinates
-    #     '''
-    #     # char lookup
-    #     peg_pos_idx = 0
-    #     peg_position_dict = {}
-
-    #     for row_num, row in enumerate(self.board):
-    #         for col_num, ele in enumerate(row):
-    #             if ele == None:
-    #                 pass
-
-    #             else:
-    #                 peg_position_dict[self.peg_chars[peg_pos_idx]] = [row_num, col_num]
-    #                 peg_pos_idx += 1
-
-    #     self.peg_pos_dict = peg_position_dict
 
     def print_board(self, pegs_on_board):
         '''Function that prints the current state of the board (i.e. pegs and holes). Also prints the numner of pegs remaining on the board'''
