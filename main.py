@@ -1,3 +1,8 @@
+# Game of Peg Solitaire for HPDM139 Assignment 1
+# By Elliott Coyne
+
+# Importing Peg, Board and Menu classes from peg_solitaire.py file
+
 from peg_solitaire import Board
 from peg_solitaire import Peg
 from peg_solitaire import Menu
@@ -6,15 +11,16 @@ menu = Menu()
 peg = Peg()
 board_ = Board()
 
-GAME_STARTED = False
+game_started = False
 pegs_on_board = 32
 peg_pos_dict = board_.peg_pos_dict
 
 menu.display_welcome()
 
-while GAME_STARTED == False:
+while game_started == False:
 	user_selection_start = menu.initiate_game()
-	################################################# Load Solutions File
+
+	# Load Solutions File
 	if user_selection_start == 'S':
 		user_loaded_moves = peg.import_from_file()
 
@@ -34,43 +40,40 @@ while GAME_STARTED == False:
 			print("Well done you've done it!")
 			quit()
 		else:
-			GAME_STARTED = True
-########################################## rules
+			game_started = True
+
+	# Display Rules
 	elif user_selection_start == 'R':
 		menu.rules()
 
-########################################## exit
+	# Exit
 	elif user_selection_start == 'E':
 		quit()
 
-######################################## play
+	# Play
 	else:
-		GAME_STARTED = True
+		game_started = True
 
-###### Game Started
+# Game Started
 while pegs_on_board > 1:
 
 	board_.print_map(peg_pos_dict)
-	print(" ")
 	board_.print_board(pegs_on_board)
-	print("--------------------------------")
-	#board_.print_map(peg_pos_dict)
-	print(" ")
 	print("There are {} pegs remaining on the board".format(pegs_on_board))
 
-
-	org_coords = [0,0]
-	dest_coords = [0,0]
+	# Setting dummy coordinates
+	org_coords = [9,9]
+	dest_coords = [9,9]
 
 	while peg.validated_middle_peg(org_coords, dest_coords)[0] == False:
 
-		VALID_USER_SELECTION = False
-		while VALID_USER_SELECTION == False:
+		valid_user_selection = False
+		while valid_user_selection == False:
 			raw_move_chars = input("Please enter your move (or EXIT to quit): ")
 			if len(raw_move_chars) == 2:
 				org_coords, org_char = peg.verify_input_char(raw_move_chars[0], peg_pos_dict, 'origin')
 				dest_coords, dest_char = peg.verify_input_char(raw_move_chars[1], peg_pos_dict, 'destination')
-				VALID_USER_SELECTION = True
+				valid_user_selection = True
 			elif raw_move_chars.upper() == "EXIT":
 				peg.auto_export_to_file()
 				quit()
