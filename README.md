@@ -24,3 +24,4 @@ The Rich Table library was used for enhanced display of the board and character 
 Please find all relevant links for this project below:
 
 *[Github Repository](https://github.com/tristar82/Peg_Solitaire)
+*[Rich Documentation](https://rich.readthedocs.io/en/stable/introduction.html)
