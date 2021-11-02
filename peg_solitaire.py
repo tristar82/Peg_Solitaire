@@ -50,15 +50,28 @@ class Peg:
 
     def validated_middle_peg(self, org_coords, dest_coords):
         '''
-        Performs the jobs of: UDLR, is_two_away and middle_peg_coords
-        :param peg_coords:
-        :param dest_coords:
-        :return:
+        Function to verify origin to destination direction, 
+        ensure the origin and destination are 2 pegs away from one another 
+        and to calculated the coordinated of the middle peg (between origin and destination)
+
+        Parameters
+        ----------
+        org_coords: list (2 elements)
+            Origin location coordinates in [row, col] format
+
+        dest_coords: list (2 elements)
+            Destination location coordinates in [row, col] format
+
+        Returns
+        -------
+        3 elements
+            Element 1 (index 0) is a list with the coordinates of the character entered, in the format [row,col]
+            Element 2 (index 1) is the final character selected (as may be different as the input character, due to error handling)
+            Element 3 (index 2) is a list with the coordinates of the middle peg position determined, in the format [row,col]
         '''
-        #direction_dict = {'U': [-1, 0], 'D': [1, 0], 'L': [0, -1], 'R': [0, 1]}
-        move_direction = ''
-        result = ''
-        middle_peg_pos = ''
+        move_direction = None
+        result = None
+        middle_peg_pos = None
 
         if org_coords[0] == dest_coords[0]: # same row
             if abs(org_coords[1] - dest_coords[1]) == 2: # col is +/- 2
@@ -88,15 +101,12 @@ class Peg:
             middle_peg_pos = [org_coords[0] + self.direction_dict[move_direction][0],
                               org_coords[1] + self.direction_dict[move_direction][1]]
         except:
-            pass
+            middle_peg_pos = [9,9] #i.e. error
+        
         return result, move_direction, middle_peg_pos
 
     def add_move(self, org_char, dest_char):
-        '''
-        Append legal moves to a list for export i.e. ox for a move of peg from position o to position x
-        :param origin_destination: str(2)
-        :return:
-        '''
+        '''Appends legal moves to a list for export i.e. ox for a move of peg from position o to position x'''
         self.legal_moves_list.append([org_char, dest_char])
 
     def verify_input_char(self, input_char, peg_dict, location):
@@ -247,11 +257,9 @@ class Board:
         return board[org_coords[0] + self.direction_dict[move_direction][0]]\
             [org_coords[1] + self.direction_dict[move_direction][1]]
 
-
     def is_destination_empty(self, destination_peg_coords, board):
         '''Function to check if destination peg hole is empty'''
         return not board[destination_peg_coords[0]][destination_peg_coords[1]] in [None, True]
-
 
     def is_origin_filled(self, origin_peg_coords, board):
         '''Function to check if origin peg hole is empty'''
