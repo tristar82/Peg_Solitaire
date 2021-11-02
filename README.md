@@ -18,7 +18,7 @@ The purpose of this assignment was to create a functioning game of Peg Solitaire
 * logs the users moves and outputs the log to file.
 
 ## Game Operation
-Once loaded, the game will ask the player to determine what they would like to do. The options are to Load a (S)oltion File, (P)lay the Game, Read the (R)ules or (E)xit.
+Once loaded, the game will ask the player to determine what they would like to do. The options are to Load a (**S**)oltion File, (**P**)lay the Game, Read the (**R**)ules or (**E**)xit.
 The aim of the game is to be lest with just 1 peg in the board.
 If loading a partial solution file, the computer will make all the loaded moves before handing over to the player.
 Upon exiting the game (after game play), a text file containing all legal moves will by generated and autosaved using the date time to create a unique file name.
