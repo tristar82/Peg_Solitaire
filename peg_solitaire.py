@@ -11,10 +11,7 @@ class Peg:
         self.direction_dict = {'U': [-1, 0], 'D': [1, 0], 'L': [0, -1], 'R': [0, 1]}
 
     def import_from_file(self):
-        '''
-
-        :return:
-        '''
+        '''Function to load in saved moved from a text file. Assumes file in current working directory'''
         while True:
             try:
                 with open(input("Enter solution filename in full: "), 'r') as import_file:
@@ -24,7 +21,7 @@ class Peg:
                     print("Solution file containing {} moved located and opened successfully".format(
                         len(file_contents_clean)))
                     return file_contents_clean
-                    break
+
             except OSError as e:
                 print("Error - Solution file not imported successfully", e)
 
