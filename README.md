@@ -18,8 +18,9 @@ The purpose of this assignment was to create a functioning game of Peg Solitaire
 * logs the users moves and outputs the log to file.
 
 ## Additional Libraries Used
-The Rich Table library was used for enhanced display of the board and character map positions. More details can be found at https://rich.readthedocs.io/en/stable/introduction.html.
+The Rich Table library was used for enhanced display of the board and character map positions. More details can be found within the *[documentation](https://rich.readthedocs.io/en/stable/introduction.html).
 
 ## Links
 Please find all relevant links for this project below:
+
 *[Repository](https://github.com/tristar82/Peg_Solitaire)
