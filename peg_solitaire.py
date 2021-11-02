@@ -247,7 +247,7 @@ class Board:
         console.print(table)
 
     def print_map(self, peg_pos_dict):
-
+        '''Function that prints the map of peg positions relative to the playing board. Uses the peg position dictionary'''
         table = Table(title="Solitaire Peg Board Character Map", show_lines=True)
 
         table.add_column(" ")
@@ -255,41 +255,36 @@ class Board:
         for i in range(7):
             table.add_column(str(i), justify='right', style="cyan", no_wrap=True)
 
-        pegs_sub = []
-        pegs = []
+        # This loop creates an empty 7x7 table
+        pegs_col = []
+        pegs_row = []
 
         for row in range(7):
             for col in range(7):
-                pegs_sub.append(" ")
-            pegs.append(pegs_sub)
-            pegs_sub = []
+                pegs_col.append(" ")
+            pegs_row.append(pegs_col)
+            pegs_col = []
 
+        # The empty 7x7 table created above
         for letter in self.peg_pos_dict.keys():
-            pegs[self.peg_pos_dict[letter][0]][self.peg_pos_dict[letter][1]] = letter
+            pegs_row[self.peg_pos_dict[letter][0]][self.peg_pos_dict[letter][1]] = letter
 
         # view of the pegs displayed on board
-        view = copy(pegs)
+        view = copy(pegs_row)
 
         # add rows to rich table
         for row_i in range(7):
-            table.add_row(str(row_i), *pegs[row_i])
+            table.add_row(str(row_i), *pegs_row[row_i])
 
         # show rich table
         console = Console()
         console.print(table)
 
     def is_middle_filled(self, org_coords, board, move_direction):
-        '''
-        Determines if middle peg is empty
-        Direction is (U)p, (D)own, (L)eft or (R)ight
-        '''
-        #direction_dict = {'U': [-1, 0], 'D': [1, 0], 'L': [0, -1], 'R': [0, 1]}
+        '''Function to check if middle peg hole is empty. Uses origin peg coordinate and move direction to determine'''
+        return board[org_coords[0] + self.direction_dict[move_direction][0]]\
+            [org_coords[1] + self.direction_dict[move_direction][1]]
 
-        if board[org_coords[0] + self.direction_dict[move_direction][0]][
-            org_coords[1] + self.direction_dict[move_direction][1]]:
-            return True
-        else:
-            return False
 
     def is_destination_empty(self, destination_peg_coords, board):
         '''Function to check if destination peg hole is empty'''
