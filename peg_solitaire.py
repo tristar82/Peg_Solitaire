@@ -216,18 +216,20 @@ class Board:
     #     self.peg_pos_dict = peg_position_dict
 
     def print_board(self, pegs_on_board):
-        board = self.board;
+        '''Function that prints the current state of the board (i.e. pegs and holes). Also prints the numner of pegs remaining on the board'''
+        board = self.board
+        
+        # Creates a visual representation of the board from the list of lists (of None, True, False) - found in __init__
         board_viz = {None: ' ', True: 'X', False: '.'}
         display_board = []
-
         for row in board:
             display_board_sub = []
             for col in row:
                 display_board_sub.append(board_viz[col])
             display_board.append(display_board_sub)
 
+        # Sets up the table 
         heading_text = "{} Pegs Remaining on Board".format(pegs_on_board)
-        #table = Table(title="Solitaire Peg Board", show_lines=True)
         table = Table(title=heading_text, show_lines=True)
 
         table.add_column(" ")
@@ -235,14 +237,14 @@ class Board:
         for i in range(7):
             table.add_column(str(i), justify='right', style="cyan", no_wrap=True)
 
-        # view of the pegs displayed on board
+        # Assinging a variable named 'view' of the rows (and columns) created above
         view = copy(display_board)
 
-        # add rows to rich table
+        # Adding rows to rich table
         for row_i in range(7):
            table.add_row(str(row_i), *display_board[row_i])
 
-        # show rich table
+        # Displaying the rich table
         console = Console()
         console.print(table)
 
@@ -265,18 +267,18 @@ class Board:
             pegs_row.append(pegs_col)
             pegs_col = []
 
-        # The empty 7x7 table created above
+        # The empty 7x7 table (created above) is now populated with peg characters
         for letter in self.peg_pos_dict.keys():
             pegs_row[self.peg_pos_dict[letter][0]][self.peg_pos_dict[letter][1]] = letter
 
-        # view of the pegs displayed on board
+        # Assinging a variable named 'view' of the rows (and columns) created above
         view = copy(pegs_row)
 
-        # add rows to rich table
+        # Adding rows to rich table
         for row_i in range(7):
             table.add_row(str(row_i), *pegs_row[row_i])
 
-        # show rich table
+        # Displaying the rich table
         console = Console()
         console.print(table)
 
