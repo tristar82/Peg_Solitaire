@@ -1,3 +1,5 @@
+# Creates the necessary classes to run the peg solitaire game (from main.py)
+
 from rich.console import Console
 from rich.table import Table
 from copy import copy
@@ -27,7 +29,8 @@ class Peg:
 
     def update_board_pegs(self, org_coords, move_direction, dest_coords, board):
         '''
-        Function to update the board when a successful move is made by the user i.e. origin and middle pegs are removed and desintation is filled.
+        Function to update the board when a successful move is made by the user i.e. origin 
+        and middle pegs are removed and desintation is filled.
 
         Parameters
         ----------
@@ -48,7 +51,8 @@ class Peg:
         board[org_coords[0]][org_coords[1]] = False
 
         # middle coords updated
-        board[org_coords[0] + self.direction_dict[move_direction][0]][org_coords[1] + self.direction_dict[move_direction][1]] = False
+        board[org_coords[0] + self.direction_dict[move_direction][0]][org_coords[1] 
+            + self.direction_dict[move_direction][1]] = False
 
         # destination filled
         board[dest_coords[0]][dest_coords[1]] = True
@@ -70,9 +74,12 @@ class Peg:
         Returns
         -------
         3 elements
-            Element 1 (index 0) is a list with the coordinates of the character entered, in the format [row,col]
-            Element 2 (index 1) is the final character selected (as may be different as the input character, due to error handling)
-            Element 3 (index 2) is a list with the coordinates of the middle peg position determined, in the format [row,col]
+            Element 1 (index 0) is a list with the coordinates of the 
+                character entered, in the format [row,col]
+            Element 2 (index 1) is the final character selected (as may 
+                be different as the input character, due to error handling)
+            Element 3 (index 2) is a list with the coordinates of the 
+                middle peg position determined, in the format [row,col]
         '''
         move_direction = None
         result = None
@@ -128,13 +135,16 @@ class Peg:
             Name of dictionary variable containing the character to position coords lookup
 
         location: str
-            String to indentify if the position entered is the origin or destination. Used for more descriptive error messages
+            String to indentify if the position entered is the origin or destination. 
+            Used for more descriptive error messages
 
         Returns
         -------
         results: tuple of 2 elements
-            Element 1 (index 0) is a list with the coordinates of the character entered, in the format [row,col]
-            Element 2 (index 1) is the final character selected (as may be different as the input character, due to error handling)
+            Element 1 (index 0) is a list with the coordinates of the 
+                        character entered, in the format [row,col]
+            Element 2 (index 1) is the final character selected (as may 
+                        be different as the input character, due to error handling)
         '''
         while input_char not in peg_dict.keys():
             input_char = input(
@@ -165,8 +175,8 @@ class Peg:
 class Board:
     def __init__(self):
         # setting up the board from a list of lists
-        self.board = [[not row == ele == 3 if ele in [2, 3, 4] or row in [2, 3, 4] else None for row in range(7)] for
-                      ele in range(7)]
+        self.board = [[not row == ele == 3 if ele in [2, 3, 4] or row in [2, 3, 4] 
+                        else None for row in range(7)] for ele in range(7)]
 
         # Generate a list of characters to represent peg positions (a-p,x,P-A)
         a_to_p = [chr(i) for i in range(97, 113)]
@@ -187,14 +197,19 @@ class Board:
 
         self.peg_pos_dict = peg_position_dict
 
-        # Create a dictionary that determines relative coordinate adjustments based on the direction from the origin to destination.
+        # Create a dictionary that determines relative coordinate 
+        # adjustments based on the direction from the origin to destination.
         self.direction_dict = {'U': [-1, 0], 'D': [1, 0], 'L': [0, -1], 'R': [0, 1]}        
 
     def print_board(self, pegs_on_board):
-        '''Function that prints the current state of the board (i.e. pegs and holes). Also prints the numner of pegs remaining on the board'''
+        '''
+        Function that prints the current state of the board (i.e. pegs and holes). 
+        Also prints the numner of pegs remaining on the board
+        '''
         board = self.board
         
-        # Creates a visual representation of the board from the list of lists (of None, True, False) - found in __init__
+        # Creates a visual representation of the board from the list of 
+        # lists (of None, True, False) - found in __init__
         board_viz = {None: ' ', True: 'X', False: '.'}
         display_board = []
         for row in board:
@@ -224,7 +239,10 @@ class Board:
         console.print(table)
 
     def print_map(self, peg_pos_dict):
-        '''Function that prints the map of peg positions relative to the playing board. Uses the peg position dictionary'''
+        '''
+        Function that prints the map of peg positions relative to the playing board. 
+        Uses the peg position dictionary
+        '''
         table = Table(title="Solitaire Peg Board Character Map", show_lines=True)
 
         table.add_column(" ")
@@ -258,7 +276,10 @@ class Board:
         console.print(table)
 
     def is_middle_filled(self, org_coords, board, move_direction):
-        '''Function to check if middle peg hole is empty. Uses origin peg coordinate and move direction to determine'''
+        '''
+        Function to check if middle peg hole is empty. 
+        Uses origin peg coordinate and move direction to determine
+        '''
         return board[org_coords[0] + self.direction_dict[move_direction][0]]\
             [org_coords[1] + self.direction_dict[move_direction][1]]
 
@@ -276,13 +297,17 @@ class Menu:
 
     def rules(self):
         print("The rules of the game are...\n" +
-              "Peg solitaire is a game for one player. There are 33 pegs arranged in a 'plus' symbol configuration.\n"+
+              "Peg solitaire is a game for one player. There are 33 pegs \n"+
+              "arranged in a 'plus' symbol configuration.\n"+
               "The peg in the centre is removed. This leaves 32 pegs.\n"+
               "The objective of the game is to end up with one peg in the middle hole (x). \n"+
-              "This is achieved by removing one peg at a time by jumping an adjacent peg over it into \n"+
+              "This is achieved by removing one peg at a time \n"+
+              "by jumping an adjacent peg over it into \n"+
               "an adjacent empty hole in the other side.\n"+
-              "For example, the peg marked with a cross would be removed by jumping the peg marked with \n"+
-              "a triangle into the hole in the centre (shaded). No diagonal jumps are permitted.\n"+
+              "For example, the peg marked with a cross would be removed by \n"+
+              "jumping the peg marked with \n"+
+              "a triangle into the hole in the centre (shaded). \n"+
+              "No diagonal jumps are permitted.\n"+
               "You can exit the game during play by typing 'EXIT'\n"+
               "Now lets play!!\n")
 
