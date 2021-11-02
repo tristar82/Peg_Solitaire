@@ -30,19 +30,27 @@ class Peg:
 
     def update_board_pegs(self, org_coords, move_direction, dest_coords, board):
         '''
-        When a move is successful - update all the pegs (origin, middle, destination)
-        :param org_coords:
-        :param dest_coords:
-        :param middle_coords:
-        :param board:
-        :return:
+        Function to update the board when a successful move is made by the user i.e. origin and middle pegs are removed and desintation is filled.
+
+        Parameters
+        ----------
+        org_coords: list (2 elements)
+            Origin location coordinates in [row, col] format
+
+        move_direction: str(1)
+            Direction from origin to destination (i.e. (U)p, (D)own, (Left), (R)ight).
+
+        dest_coords: list (2 elements)
+            Destination location coordinates in [row, col] format
+
+        board: 
+            Current state of playing board
+
         '''
-        # origin to be emptied
+        # origin hole to be emptied
         board[org_coords[0]][org_coords[1]] = False
 
         # middle coords updated
-        #direction_dict = {'U': [-1, 0], 'D': [1, 0], 'L': [0, -1], 'R': [0, 1]}
-
         board[org_coords[0] + self.direction_dict[move_direction][0]][org_coords[1] + self.direction_dict[move_direction][1]] = False
 
         # destination filled
