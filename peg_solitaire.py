@@ -273,7 +273,7 @@ class Board:
         console = Console()
         console.print(table)
 
-    def is_middle_full(self, org_coords, board, move_direction):
+    def is_middle_filled(self, org_coords, board, move_direction):
         '''
         Determines if middle peg is empty
         Direction is (U)p, (D)own, (L)eft or (R)ight
@@ -305,9 +305,6 @@ class Board:
             return True
 
 class Menu:
-    def __init__(self):
-        pass
-
     def display_welcome(self):
         print("Welcome to Peg Solitaire")
 
@@ -325,11 +322,11 @@ class Menu:
 
     def initiate_game(self):
         print("Options are (R)ules, Load (S)olution File, (P)lay game or (E)xit")
-        VALID_SELECTION = False
-        while VALID_SELECTION == False:
+        valid_selection = False
+        while valid_selection == False:
             user_selection_start = input("Please enter selection: ").upper()
             if user_selection_start in ['R','S','P','E']:
                 return user_selection_start
-                VALID_SELECTION = True
+                valid_selection = True
             else:
                 print("Please enter a valid selection")
