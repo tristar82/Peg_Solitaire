@@ -8,6 +8,8 @@ class Peg:
     def __init__(self):
         self.legal_moves_list = []
 
+        self.direction_dict = {'U': [-1, 0], 'D': [1, 0], 'L': [0, -1], 'R': [0, 1]}
+
     def import_from_file(self):
         '''
 
@@ -39,9 +41,9 @@ class Peg:
         board[org_coords[0]][org_coords[1]] = False
 
         # middle coords updated
-        direction_dict = {'U': [-1, 0], 'D': [1, 0], 'L': [0, -1], 'R': [0, 1]}
+        #direction_dict = {'U': [-1, 0], 'D': [1, 0], 'L': [0, -1], 'R': [0, 1]}
 
-        board[org_coords[0] + direction_dict[move_direction][0]][org_coords[1] + direction_dict[move_direction][1]] = False
+        board[org_coords[0] + self.direction_dict[move_direction][0]][org_coords[1] + self.direction_dict[move_direction][1]] = False
 
         # destination filled
         board[dest_coords[0]][dest_coords[1]] = True
@@ -53,7 +55,7 @@ class Peg:
         :param dest_coords:
         :return:
         '''
-        direction_dict = {'U': [-1, 0], 'D': [1, 0], 'L': [0, -1], 'R': [0, 1]}
+        #direction_dict = {'U': [-1, 0], 'D': [1, 0], 'L': [0, -1], 'R': [0, 1]}
         move_direction = ''
         result = ''
         middle_peg_pos = ''
@@ -83,8 +85,8 @@ class Peg:
             result = False
 
         try:
-            middle_peg_pos = [org_coords[0] + direction_dict[move_direction][0],
-                              org_coords[1] + direction_dict[move_direction][1]]
+            middle_peg_pos = [org_coords[0] + self.direction_dict[move_direction][0],
+                              org_coords[1] + self.direction_dict[move_direction][1]]
         except:
             pass
         return result, move_direction, middle_peg_pos
@@ -189,7 +191,10 @@ class Board:
                     peg_position_dict[self.peg_chars[peg_pos_idx]] = [row_num, col_num]
                     peg_pos_idx += 1
 
-        self.peg_pos_dict = peg_position_dict        
+        self.peg_pos_dict = peg_position_dict
+
+        # Create a dictionary that determines
+        self.direction_dict = {'U': [-1, 0], 'D': [1, 0], 'L': [0, -1], 'R': [0, 1]}        
 
     # def character_lookup(self):
     #     '''
@@ -278,29 +283,21 @@ class Board:
         Determines if middle peg is empty
         Direction is (U)p, (D)own, (L)eft or (R)ight
         '''
-        direction_dict = {'U': [-1, 0], 'D': [1, 0], 'L': [0, -1], 'R': [0, 1]}
+        #direction_dict = {'U': [-1, 0], 'D': [1, 0], 'L': [0, -1], 'R': [0, 1]}
 
-        if board[org_coords[0] + direction_dict[move_direction][0]][
-            org_coords[1] + direction_dict[move_direction][1]]:
+        if board[org_coords[0] + self.direction_dict[move_direction][0]][
+            org_coords[1] + self.direction_dict[move_direction][1]]:
             return True
         else:
             return False
 
     def is_destination_empty(self, destination_peg_coords, board):
         '''Function to check if destination peg hole is empty'''
-        # if board[destination_peg_coords[0]][destination_peg_coords[1]] in [None, True]:
-        #     return False
-        # else:
-        #     return True
         return not board[destination_peg_coords[0]][destination_peg_coords[1]] in [None, True]
 
 
     def is_origin_filled(self, origin_peg_coords, board):
         '''Function to check if origin peg hole is empty'''
-        # if board[origin_peg_coords[0]][origin_peg_coords[1]] in [None, False]:
-        #     return False
-        # else:
-        #     return True
         return not board[origin_peg_coords[0]][origin_peg_coords[1]] in [None, False]
 
 class Menu:
