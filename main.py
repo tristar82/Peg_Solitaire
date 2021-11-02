@@ -1,5 +1,6 @@
 # Game of Peg Solitaire for HPDM139 Assignment 1
 # By Elliott Coyne
+# Please refer to readme.md for more details.
 
 # Importing Peg, Board and Menu classes from peg_solitaire.py file
 
@@ -61,7 +62,7 @@ while pegs_on_board > 1:
 	board_.print_board(pegs_on_board)
 	print("There are {} pegs remaining on the board".format(pegs_on_board))
 
-	# Setting dummy coordinates
+	# Setting dummy coordinates, ready to validate user entry moves
 	org_coords = [9,9]
 	dest_coords = [9,9]
 
@@ -71,8 +72,10 @@ while pegs_on_board > 1:
 		while valid_user_selection == False:
 			raw_move_chars = input("Please enter your move (or EXIT to quit): ")
 			if len(raw_move_chars) == 2:
-				org_coords, org_char = peg.verify_input_char(raw_move_chars[0], peg_pos_dict, 'origin')
-				dest_coords, dest_char = peg.verify_input_char(raw_move_chars[1], peg_pos_dict, 'destination')
+				org_coords, org_char = peg.verify_input_char(raw_move_chars[0], \
+					peg_pos_dict, 'origin')
+				dest_coords, dest_char = peg.verify_input_char(raw_move_chars[1], \
+					peg_pos_dict, 'destination')
 				valid_user_selection = True
 			elif raw_move_chars.upper() == "EXIT":
 				peg.auto_export_to_file()
@@ -80,11 +83,12 @@ while pegs_on_board > 1:
 			else:
 				print("Selection doesn't look right. Please try again. ")
 
-	## Get direction of travel
+	## Get direction of travel (origin to destination)
 	move_direction = peg.validated_middle_peg(org_coords, dest_coords)[1]
 
 	if board_.is_middle_filled(org_coords, board_.board, move_direction) \
-			and board_.is_destination_empty(dest_coords, board_.board) and board_.is_origin_filled(org_coords, board_.board):
+			and board_.is_destination_empty(dest_coords, board_.board) \
+			and board_.is_origin_filled(org_coords, board_.board):
 
 		peg.update_board_pegs(org_coords, move_direction, dest_coords, board_.board)
 		peg.add_move(org_char, dest_char)
