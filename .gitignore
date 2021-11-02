@@ -1,7 +1,5 @@
 Archive/
-
-# Created by https://www.toptal.com/developers/gitignore/api/visualstudiocode,pycharm,dropbox,jupyternotebooks,windows
-# Edit at https://www.toptal.com/developers/gitignore?templates=visualstudiocode,pycharm,dropbox,jupyternotebooks,windows
+__pycache__/
 
 ### Python ###
 # Byte-compiled / optimized / DLL files
@@ -347,5 +345,3 @@ $RECYCLE.BIN/
 
 # Windows shortcuts
 *.lnk
-
-# End of https://www.toptal.com/developers/gitignore/api/visualstudiocode,pycharm,dropbox,jupyternotebooks,windows
