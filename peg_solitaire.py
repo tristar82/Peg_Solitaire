@@ -287,22 +287,21 @@ class Board:
             return False
 
     def is_destination_empty(self, destination_peg_coords, board):
-        '''
-        Determines if the destination peg hole is empty or full
-        '''
-        if board[destination_peg_coords[0]][destination_peg_coords[1]] in [None, True]:
-            return False
-        else:
-            return True
+        '''Function to check if destination peg hole is empty'''
+        # if board[destination_peg_coords[0]][destination_peg_coords[1]] in [None, True]:
+        #     return False
+        # else:
+        #     return True
+        return not board[destination_peg_coords[0]][destination_peg_coords[1]] in [None, True]
+
 
     def is_origin_filled(self, origin_peg_coords, board):
-        '''
-        Determines if the origin  peg hole is empty or full
-        '''
-        if board[origin_peg_coords[0]][origin_peg_coords[1]] in [None, False]:
-            return False
-        else:
-            return True
+        '''Function to check if origin peg hole is empty'''
+        # if board[origin_peg_coords[0]][origin_peg_coords[1]] in [None, False]:
+        #     return False
+        # else:
+        #     return True
+        return not board[origin_peg_coords[0]][origin_peg_coords[1]] in [None, False]
 
 class Menu:
     def display_welcome(self):
