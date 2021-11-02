@@ -20,7 +20,7 @@ The purpose of this assignment was to create a functioning game of Peg Solitaire
 ## Game Operation
 Once loaded, the game will ask the player to determine what they would like to do. The options are to Load a (**S**)oltion File, (**P**)lay the Game, Read the (**R**)ules or (**E**)xit.
 The aim of the game is to be lest with just 1 peg in the board.
-If loading a partial solution file, the computer will make all the loaded moves before handing over to the player.
+If loading a partial solution file, the computer will make all the loaded moves before handing over to the player. Any subsequent moves will be appended to loaded moves and appear as a single file in the export.
 Upon exiting the game (after game play), a text file containing all legal moves will by generated and autosaved using the date time to create a unique file name.
 If playing the game, the following criteria must be satisfied for a move to be considered legal:
 * ORIGIN and MIDDLE peg must be filled;
@@ -33,5 +33,5 @@ The Rich Table library was used for enhanced display of the board and character 
 ## Links
 Please find all relevant links for this project below:
 
-- [Github Repository](https://github.com/tristar82/Peg_Solitaire)\
+- [Github Repository](https://github.com/tristar82/Peg_Solitaire) 
 - [Rich Documentation](https://rich.readthedocs.io/en/stable/introduction.html)
