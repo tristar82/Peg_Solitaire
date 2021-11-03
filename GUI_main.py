@@ -62,19 +62,38 @@ class Application(tk.Frame):
     def create_widgets(self):
         for c in self.coords:
             button_letter = self.chars.pop(0)
+            ####
+            board_viz = {None: ' ', True: 'blue', False: 'red'}
+            hole_description = board_.board[c[0]][c[1]]
+            button_colour =  board_viz[hole_description]
+            ####
             tk.Button(self,
                       text=button_letter,
                       height = 2,
                       width = 4,
                       font='sans 10 bold',
-                      bg='red',#
+                      bg = button_colour,
                       command=lambda button_entry_coords = c : set_coords(button_entry_coords, state_of_play)
                       ).grid(row=c[0], column=c[1])
 
     def get_button_colour(self, location):
         board_viz = {None: ' ', True: 'blue', False: 'red'}
-        hole_description = list(board_.board.keys())[list(board_.board.values()).index(location)]
+        hole_description = board_.board[location[0]][location[1]]
+        return board_viz[hole_description]
 
+    def change_button_colour(self):
+        tk.Button['bg'] = 'red'
+
+    def change_button_colour2(self, name):
+        #buttonColors[name].set("red")
+        #buttonDic[name].config(background=buttonColors[name].get())
+        tk.Button.config(background = 'red')
+
+# trying dual location below to see if this makes a difference
+def get_button_colour(self, location):
+    board_viz = {None: ' ', True: 'blue', False: 'red'}
+    hole_description = board_.board[location[0]][location[1]]
+    return board_viz[hole_description]
 
 def set_coords(coords, state_of_play_input):
     '''Function to capture the coords and their identity i.e. origin or destination'''
@@ -128,6 +147,7 @@ def mega_function(org_coords, dest_coords ):
             print("I think this worked")
             print(pegs_on_board)
             print(board_.board)
+            root.change_button_colour2('[3,1]')
         else:
             print("Are ORIGIN and MIDDLE holes empty filled and DESTINATION empty?")
 
