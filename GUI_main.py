@@ -56,6 +56,9 @@ class Application(tk.Frame):
             button_letter = self.chars.pop(0)
             tk.Button(self,
                       text=button_letter,
+                      height = 2,
+                      width = 4,
+                      font='sans 10 bold',
                       #text=c,
                       #command=lambda *args : set_coords(button_letter, state_of_play) #button_letter=c
                       command=lambda button_entry_coords = c : set_coords(button_entry_coords, state_of_play)
@@ -124,7 +127,7 @@ def mega_function(org_coords, dest_coords ):
 
 
 root = tk.Tk()
-root.title("Tester GUI")
-root.geometry("300x300")
+root.title("Peg Solitaire")
+root.geometry("350x350")
 root = Application(root)
 root.mainloop()
