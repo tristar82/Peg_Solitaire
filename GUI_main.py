@@ -1,6 +1,8 @@
 
 import tkinter as tk
 from tkinter import *
+import os
+import datetime
 
 ####### start of import from Text Game
 from peg_solitaire import Board
@@ -65,8 +67,13 @@ class Application(tk.Frame):
                       height = 2,
                       width = 4,
                       font='sans 10 bold',
+                      bg='red',#
                       command=lambda button_entry_coords = c : set_coords(button_entry_coords, state_of_play)
                       ).grid(row=c[0], column=c[1])
+
+    def get_button_colour(self, location):
+        board_viz = {None: ' ', True: 'blue', False: 'red'}
+        hole_description = list(board_.board.keys())[list(board_.board.values()).index(location)]
 
 
 def set_coords(coords, state_of_play_input):
@@ -120,6 +127,7 @@ def mega_function(org_coords, dest_coords ):
             root.display_label()
             print("I think this worked")
             print(pegs_on_board)
+            print(board_.board)
         else:
             print("Are ORIGIN and MIDDLE holes empty filled and DESTINATION empty?")
 
