@@ -40,8 +40,13 @@ class Application(tk.Frame):
         self.create_grid_coords()
         self.create_widgets()
 
+        self.buttons()
+
+
+
     def display_label(self):
         tk.Label(text="{} Pegs Remaining".format(pegs_on_board)).grid(row=7, column=0)
+        #tk.Label(text="TMP Awaiting Next Instruction".format(pegs_on_board)).grid(row=8, column=0)
 
     def create_grid_coords(self):
         raw_grid = [[not row == ele == 3 if ele in [2, 3, 4] or row in [2, 3, 4] else None for row in range(7)] for ele
@@ -55,7 +60,6 @@ class Application(tk.Frame):
     def create_widgets(self):
         self.chars_copy = self.chars.copy()
         for c in self.coords:
-            #self.chars_copy = self.chars.copy()
             button_letter = self.chars_copy.pop(0)
             ####
             board_viz = {None: ' ', True: 'blue', False: 'red'}
@@ -70,6 +74,15 @@ class Application(tk.Frame):
                       bg = button_colour,
                       command=lambda button_entry_coords = c : set_coords(button_entry_coords, state_of_play)
                       ).grid(row=c[0], column=c[1])
+        tk.Label(text="{} Pegs Remaining".format(pegs_on_board)).grid(row=7, column=0)
+        tk.Button(self, text="Quit", command=quit).grid(row=0, column=0)
+        tk.Button(self, text="Save", command=peg.auto_export_to_file).grid(row=1, column=0)
+
+    def buttons(self):
+        pass
+        #tk.Button(self,text="Quit", command = quit).grid(row=0, column=0)
+        #tk.Button(self, text="Save", command=peg.auto_export_to_file).grid(row=1, column=0)
+
 
 def set_coords(coords, state_of_play_input):
     '''Function to capture the coords and their identity i.e. origin or destination'''
@@ -77,14 +90,19 @@ def set_coords(coords, state_of_play_input):
     global org_coords_input
     global dest_coords_input
     global state_of_play  # can remove if commenting out the bottom line below.
+
+    tk.Label(text="{} Pegs Remaining".format(pegs_on_board)).grid(row=7, column=0)
+
     if state_of_play_input == 0:
+        tk.Label(text="Click on Destination Hole").grid(row=8, column=0)
         org_coords_input = coords
         state_of_play = 1
-        print("The origin has been set to {} and the state of play is {}".format(org_coords_input,state_of_play ))
+        #print("The origin has been set to {} and the state of play is {}".format(org_coords_input,state_of_play ))
     elif state_of_play_input == 1:
         dest_coords_input = coords
         mega_function(org_coords_input, dest_coords_input)
-        print("The destination has been set to {} and the state of play is {}".format(dest_coords_input, state_of_play))
+        tk.Label(text="Click on Origin Peg").grid(row=8, column=0)
+        #print("The destination has been set to {} and the state of play is {}".format(dest_coords_input, state_of_play))
         #state_of_play = 0
 
 
@@ -114,13 +132,11 @@ def mega_function(org_coords, dest_coords):
                 and board_.is_origin_filled(org_coords, board_.board):
 
             peg.update_board_pegs(org_coords, move_direction, dest_coords, board_.board)
-            peg.add_move(org_char, dest_char) # need to look up coords to character
+            peg.add_move(org_char, dest_char)
             pegs_on_board -= 1
             state_of_play = 0
             root.display_label()
-            print("I think this worked")
-            print(pegs_on_board)
-            print(board_.board)
+
             root.create_widgets()
             if pegs_on_board == 1:
                 peg.auto_export_to_file()
@@ -129,8 +145,11 @@ def mega_function(org_coords, dest_coords):
 
 ########################################### END OF RECYCLED CODE
 
+
+
+
 root = tk.Tk()
 root.title("Peg Solitaire")
-#root.geometry("350x350")
+root.geometry("350x350")
 root = Application(root)
 root.mainloop()
