@@ -40,7 +40,7 @@ class Application(tk.Frame):
         self.create_grid_coords()
         self.create_widgets()
 
-        self.buttons()
+        #self.buttons()
 
 
 
@@ -56,6 +56,14 @@ class Application(tk.Frame):
                 if raw_grid[row][col] is not None:
                     self.coords.append([row, col])
         print(raw_grid)
+
+
+    def quit_game(self):
+        peg.auto_export_to_file()
+        quit()
+
+    def save_game(self):
+        peg.auto_export_to_file()
 
     def create_widgets(self):
         self.chars_copy = self.chars.copy()
@@ -75,13 +83,9 @@ class Application(tk.Frame):
                       command=lambda button_entry_coords = c : set_coords(button_entry_coords, state_of_play)
                       ).grid(row=c[0], column=c[1])
         tk.Label(text="{} Pegs Remaining".format(pegs_on_board)).grid(row=7, column=0)
-        tk.Button(self, text="Quit", command=quit).grid(row=0, column=0)
+        tk.Button(self, text="Quit", command=self.quit_game).grid(row=0, column=0)
         tk.Button(self, text="Save", command=peg.auto_export_to_file).grid(row=1, column=0)
 
-    def buttons(self):
-        pass
-        #tk.Button(self,text="Quit", command = quit).grid(row=0, column=0)
-        #tk.Button(self, text="Save", command=peg.auto_export_to_file).grid(row=1, column=0)
 
 
 def set_coords(coords, state_of_play_input):
