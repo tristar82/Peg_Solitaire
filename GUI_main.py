@@ -41,6 +41,10 @@ class Application(tk.Frame):
 
         self.create_grid_coords()
         self.create_widgets()
+        self.display_label()
+
+    def display_label(self):
+        tk.Label(text="There are currently {} left on the board".format(pegs_on_board)).grid(row=7, column=0)
 
     def create_grid_coords(self):
         raw_grid = [[not row == ele == 3 if ele in [2, 3, 4] or row in [2, 3, 4] else None for row in range(7)] for ele
@@ -49,7 +53,7 @@ class Application(tk.Frame):
             for col in range(len(raw_grid[row])):
                 if raw_grid[row][col] is not None:
                     self.coords.append([row, col])
-
+        print(raw_grid)
 
     def create_widgets(self):
         for c in self.coords:
@@ -59,8 +63,6 @@ class Application(tk.Frame):
                       height = 2,
                       width = 4,
                       font='sans 10 bold',
-                      #text=c,
-                      #command=lambda *args : set_coords(button_letter, state_of_play) #button_letter=c
                       command=lambda button_entry_coords = c : set_coords(button_entry_coords, state_of_play)
                       ).grid(row=c[0], column=c[1])
 
@@ -126,8 +128,10 @@ def mega_function(org_coords, dest_coords ):
 
 
 
+
+
 root = tk.Tk()
 root.title("Peg Solitaire")
-root.geometry("350x350")
+#root.geometry("350x350")
 root = Application(root)
 root.mainloop()
