@@ -1,6 +1,6 @@
+# GUI Version of the Peg Solitaire Assignment - Advanced Section
 
 import tkinter as tk
-from tkinter import *
 import os
 import datetime
 
@@ -18,7 +18,6 @@ pegs_on_board = 32
 peg_pos_dict = board_.peg_pos_dict
 ####### end of import from Text Game
 
-
 global state_of_play  # can remove if commenting out the bottom line below.
 global org_coords_input
 global dest_coords_input
@@ -28,17 +27,11 @@ org_coords_input = None
 dest_coords_input = None
 
 
-
-
-
 class Application(tk.Frame):
     def __init__(self, master):
         """This initializes the frame"""
         super(Application, self).__init__(master)
-        #global pegs_on_board
-
         self.grid()
-
         self.coords = []
         self.chars_copy = None
         self.base = [chr(i) for i in range(97, 113)]
@@ -46,7 +39,6 @@ class Application(tk.Frame):
 
         self.create_grid_coords()
         self.create_widgets()
-        #self.display_label()
 
     def display_label(self):
         tk.Label(text="{} Pegs Remaining".format(pegs_on_board)).grid(row=7, column=0)
@@ -79,28 +71,6 @@ class Application(tk.Frame):
                       command=lambda button_entry_coords = c : set_coords(button_entry_coords, state_of_play)
                       ).grid(row=c[0], column=c[1])
 
-    # def get_button_colour(self, location):
-    #     board_viz = {None: ' ', True: 'blue', False: 'red'}
-    #     hole_description = board_.board[location[0]][location[1]]
-    #     return board_viz[hole_description]
-    #
-    # def change_button_colour(self):
-    #     tk.Button['bg'] = 'red'
-    #
-    # def change_button_colour2(self, name):
-    #     #buttonColors[name].set("red")
-    #     #buttonDic[name].config(background=buttonColors[name].get())
-    #     tk.Button.config(background = 'red')
-
-
-
-
-# trying dual location below to see if this makes a difference
-# def get_button_colour(self, location):
-#     board_viz = {None: ' ', True: 'blue', False: 'red'}
-#     hole_description = board_.board[location[0]][location[1]]
-#     return board_viz[hole_description]
-
 def set_coords(coords, state_of_play_input):
     '''Function to capture the coords and their identity i.e. origin or destination'''
     # global input_coords
@@ -120,19 +90,17 @@ def set_coords(coords, state_of_play_input):
 
 ########################################### START OF RECYCLED CODE
 
-def mega_function(org_coords, dest_coords ):
+def mega_function(org_coords, dest_coords):
     '''The purpose of this function is to call all of the functions created for the text game to:
     1 assess if a legal move has been put forward
     2 determine the direction of travel
     3 update the board if everything is in order'''
-    #if state_of_play = 2: # i.e. ready to assess
     global state_of_play
     global pegs_on_board
+    global  peg_pos_dict
 
-    # org_coords, org_char = peg.verify_input_char(raw_move_chars[0], \
-    #                                              peg_pos_dict, 'origin')
-    # dest_coords, dest_char = peg.verify_input_char(raw_move_chars[1], \
-    #                                                peg_pos_dict, 'destination')
+    org_char = list(peg_pos_dict.keys())[list(peg_pos_dict.values()).index(org_coords)]
+    dest_char = list(peg_pos_dict.keys())[list(peg_pos_dict.values()).index(dest_coords)]
 
     if not peg.validated_middle_peg(org_coords, dest_coords)[0]:
         state_of_play = 0 #
@@ -146,31 +114,23 @@ def mega_function(org_coords, dest_coords ):
                 and board_.is_origin_filled(org_coords, board_.board):
 
             peg.update_board_pegs(org_coords, move_direction, dest_coords, board_.board)
-            #peg.add_move(org_char, dest_char) need to look up coords to character
+            peg.add_move(org_char, dest_char) # need to look up coords to character
             pegs_on_board -= 1
             state_of_play = 0
             root.display_label()
             print("I think this worked")
             print(pegs_on_board)
             print(board_.board)
-            #root.change_button_colour2('[3,1]')
             root.create_widgets()
+            if pegs_on_board == 1:
+                peg.auto_export_to_file()
         else:
             print("Are ORIGIN and MIDDLE holes empty filled and DESTINATION empty?")
 
 ########################################### END OF RECYCLED CODE
 
-
-# if state_of_play == 2:
-#     mega_function(org_coords_input, dest_coords_input)
-
-
-
-
-
 root = tk.Tk()
 root.title("Peg Solitaire")
 #root.geometry("350x350")
-#tk.Label(anchor='s', text="There are currently {} left on the boardXXXX".format(pegs_on_board)).grid(row=7, column=0)
 root = Application(root)
 root.mainloop()
