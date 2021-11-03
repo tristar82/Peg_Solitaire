@@ -33,6 +33,8 @@ class Application(tk.Frame):
     def __init__(self, master):
         """This initializes the frame"""
         super(Application, self).__init__(master)
+        #global pegs_on_board
+
         self.grid()
 
         self.coords = []
@@ -41,10 +43,10 @@ class Application(tk.Frame):
 
         self.create_grid_coords()
         self.create_widgets()
-        self.display_label()
+        #self.display_label()
 
     def display_label(self):
-        tk.Label(text="There are currently {} left on the board".format(pegs_on_board)).grid(row=7, column=0)
+        tk.Label(text="{} Pegs Remaining".format(pegs_on_board)).grid(row=7, column=0)
 
     def create_grid_coords(self):
         raw_grid = [[not row == ele == 3 if ele in [2, 3, 4] or row in [2, 3, 4] else None for row in range(7)] for ele
@@ -115,6 +117,7 @@ def mega_function(org_coords, dest_coords ):
             #peg.add_move(org_char, dest_char) need to look up coords to character
             pegs_on_board -= 1
             state_of_play = 0
+            root.display_label()
             print("I think this worked")
             print(pegs_on_board)
         else:
@@ -133,5 +136,6 @@ def mega_function(org_coords, dest_coords ):
 root = tk.Tk()
 root.title("Peg Solitaire")
 #root.geometry("350x350")
+#tk.Label(anchor='s', text="There are currently {} left on the boardXXXX".format(pegs_on_board)).grid(row=7, column=0)
 root = Application(root)
 root.mainloop()
