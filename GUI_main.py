@@ -1,6 +1,9 @@
 # GUI Version of the Peg Solitaire Assignment - Advanced Section
 
 import tkinter as tk
+from tkinter.filedialog import askopenfilename
+from tkinter.messagebox import showerror
+
 import os
 import datetime
 
@@ -13,6 +16,9 @@ menu = Menu()
 peg = Peg()
 board_ = Board()
 
+global pegs_on_board
+
+
 game_started = False
 pegs_on_board = 32
 peg_pos_dict = board_.peg_pos_dict
@@ -21,6 +27,7 @@ peg_pos_dict = board_.peg_pos_dict
 global state_of_play  # can remove if commenting out the bottom line below.
 global org_coords_input
 global dest_coords_input
+
 
 state_of_play = 0
 org_coords_input = None
@@ -65,6 +72,30 @@ class Application(tk.Frame):
     def save_game(self):
         peg.auto_export_to_file()
 
+    def load_moves(self):
+        '''Function to open text file, via file browser. Text file loaded into a variable'''
+        global pegs_on_board
+        self.fname = askopenfilename(filetypes=(("Soltuion Files", "*.txt"),("All files", "*.*") ))
+        file_contents = open(self.fname)
+        data = file_contents.read()
+        file_contents.close()
+        user_loaded_moves = data.strip().split(',')
+        # Cycle though the loaded moves
+        for user_loaded_move in user_loaded_moves:
+            # Extract the origin peg
+            user_org_coords = peg_pos_dict[user_loaded_move[0]]
+            # Extract the destination peg
+            user_dest_coords = peg_pos_dict[user_loaded_move[1]]
+
+            # Update the board as per the legal move
+            peg.update_board_pegs(user_org_coords, \
+                                  peg.validated_middle_peg(user_org_coords, user_dest_coords)[1],
+                                  user_dest_coords, board_.board)
+            peg.add_move(user_loaded_move[0], user_loaded_move[1])
+
+            pegs_on_board -= 1
+            self.create_widgets()
+
     def create_widgets(self):
         self.chars_copy = self.chars.copy()
         for c in self.coords:
@@ -85,6 +116,7 @@ class Application(tk.Frame):
         tk.Label(text="{} Pegs Remaining".format(pegs_on_board)).grid(row=7, column=0)
         tk.Button(self, text="Quit", command=self.quit_game).grid(row=0, column=0)
         tk.Button(self, text="Save", command=peg.auto_export_to_file).grid(row=1, column=0)
+        tk.Button(self, text="Load", command=self.load_moves).grid(row=7, column=0)
 
 
 
@@ -111,7 +143,6 @@ def set_coords(coords, state_of_play_input):
 
 
 ########################################### START OF RECYCLED CODE
-
 def mega_function(org_coords, dest_coords):
     '''The purpose of this function is to call all of the functions created for the text game to:
     1 assess if a legal move has been put forward
