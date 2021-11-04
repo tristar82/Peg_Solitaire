@@ -52,7 +52,7 @@ while game_started == False:
 				else:
 					game_started = True
 
-				load_moves_useable = False
+				load_moves_useable = True
 			except:
 				pass
 
