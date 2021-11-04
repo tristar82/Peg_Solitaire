@@ -30,18 +30,19 @@ while game_started == False:
 
 				# Cycle though the loaded moves
 				for user_loaded_move in user_loaded_moves:
-					# Extract the origin peg
-					user_org_coords = peg_pos_dict[user_loaded_move[0]]
-					# Extract the destination peg
-					user_dest_coords = peg_pos_dict[user_loaded_move[1]]
+					if len(user_loaded_move) == 2:
+						# Extract the origin peg
+						user_org_coords = peg_pos_dict[user_loaded_move[0]]
+						# Extract the destination peg
+						user_dest_coords = peg_pos_dict[user_loaded_move[1]]
 
-					# Update the board as per the legal move
-					peg.update_board_pegs(user_org_coords, \
-						peg.validated_middle_peg(user_org_coords, user_dest_coords)[1],
-										 user_dest_coords, board_.board)
-					peg.add_move(user_loaded_move[0], user_loaded_move[1])
+						# Update the board as per the legal move
+						peg.update_board_pegs(user_org_coords, \
+							peg.validated_middle_peg(user_org_coords, user_dest_coords)[1],
+											 user_dest_coords, board_.board)
+						peg.add_move(user_loaded_move[0], user_loaded_move[1])
 
-					pegs_on_board -= 1
+						pegs_on_board -= 1
 
 				print("\nAfter loading the solution file, there are now {} peg(s) on the board\n"\
 					.format(pegs_on_board))
