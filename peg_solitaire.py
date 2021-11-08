@@ -20,8 +20,7 @@ class Peg:
                     file_contents = import_file.read()
                     import_file.close()
                     file_contents_clean = file_contents.strip().split(',')
-                    print("Solution file containing {} moved located and opened successfully".format(
-                        len(file_contents_clean)))
+                    print("Solution file containing {} moved located and opened successfully".format(len(file_contents_clean)))
                     return file_contents_clean
 
             except OSError as e:
@@ -29,8 +28,8 @@ class Peg:
 
     def update_board_pegs(self, org_coords, move_direction, dest_coords, board):
         '''
-        Function to update the board when a successful move is made by the user i.e. origin 
-        and middle pegs are removed and desintation is filled.
+        Function to update the board when a successful move is made by the user
+        i.e. origin and middle pegs are removed and desintation is filled.
 
         Parameters
         ----------
@@ -61,7 +60,8 @@ class Peg:
         '''
         Function to verify origin to destination direction, 
         ensure the origin and destination are 2 pegs away from one another 
-        and to calculated the coordinated of the middle peg (between origin and destination)
+        and to calculated the coordinated of the middle peg (between origin and
+        destination)
 
         Parameters
         ----------
@@ -118,13 +118,16 @@ class Peg:
         return result, move_direction, middle_peg_pos
 
     def add_move(self, org_char, dest_char):
-        '''Appends legal moves to a list for export i.e. ox for a move of peg from position o to position x'''
+        '''Appends legal moves to a list for export i.e. ox for a move of peg
+        from position o to position x'''
         self.legal_moves_list.append([org_char, dest_char])
 
     def verify_input_char(self, input_char, peg_dict, location):
         '''
-        Function to verify if a character peg position is valid and has a corresponding set of peg coordinates.
-        Includes error handling in case that the an invalid (non-existing) peg character is entered by the user.
+        Function to verify if a character peg position is valid and has a
+        corresponding set of peg coordinates.
+        Includes error handling in case that the an invalid (non-existing)
+        peg character is entered by the user.
 
         Parameters
         ----------
@@ -211,7 +214,7 @@ class Board:
         
         # Creates a visual representation of the board from the list of 
         # lists (of None, True, False) - found in __init__
-        board_viz = {None: ' ', True: 'X', False: '.'}
+        board_viz = {None: ' ', True: '.', False: 'o'}
         display_board = []
         for row in board:
             display_board_sub = []
@@ -286,11 +289,13 @@ class Board:
 
     def is_destination_empty(self, destination_peg_coords, board):
         '''Function to check if destination peg hole is empty'''
-        return not board[destination_peg_coords[0]][destination_peg_coords[1]] in [None, True]
+        return not board[destination_peg_coords[0]][destination_peg_coords[1]] \
+                   in [None, True]
 
     def is_origin_filled(self, origin_peg_coords, board):
         '''Function to check if origin peg hole is empty'''
-        return not board[origin_peg_coords[0]][origin_peg_coords[1]] in [None, False]
+        return not board[origin_peg_coords[0]][origin_peg_coords[1]] \
+                   in [None, False]
 
 class Menu:
     def display_welcome(self):
