@@ -55,7 +55,7 @@ while game_started == False:
 
 				load_moves_useable = True
 			except:
-				pass
+				print("There seems to be an issue with the solution file loaded")
 
 	# Display Rules
 	elif user_selection_start == 'R':
@@ -80,7 +80,7 @@ while pegs_on_board > 1:
 	org_coords = [9,9]
 	dest_coords = [9,9]
 
-	while peg.validated_middle_peg(org_coords, dest_coords)[0] == False:
+	while not peg.validated_middle_peg(org_coords, dest_coords)[0]:
 
 		valid_user_selection = False
 		while valid_user_selection == False:
