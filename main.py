@@ -18,44 +18,53 @@ peg_pos_dict = board_.peg_pos_dict
 
 menu.display_welcome()
 
-while game_started == False:
+while not game_started:
 	user_selection_start = menu.initiate_game()
 
 	# Load Solutions File
 	if user_selection_start == 'S':
-		load_moves_useable = False
-		while  load_moves_useable == False:
-			try:
-				user_loaded_moves = peg.import_from_file()
+		user_loaded_moves = peg.import_from_file()
 
-				# Cycle though the loaded moves
-				for user_loaded_move in user_loaded_moves:
-					if len(user_loaded_move) == 2:
-						# Extract the origin peg
-						user_org_coords = peg_pos_dict[user_loaded_move[0]]
-						# Extract the destination peg
-						user_dest_coords = peg_pos_dict[user_loaded_move[1]]
+		# Cycle though the loaded moves
+		for user_loaded_move in user_loaded_moves:
+			if len(user_loaded_move) == 2:
+				# Extract the origin peg
+				try:
+					user_org_coords = peg_pos_dict[user_loaded_move[0]]
+				except:
+					print(str(user_loaded_move[0])+" isn't in peg position dict")
 
-						# Update the board as per the legal move
-						peg.update_board_pegs(user_org_coords, \
-							peg.validated_middle_peg(user_org_coords, user_dest_coords)[1],
-											 user_dest_coords, board_.board)
-						peg.add_move(user_loaded_move[0], user_loaded_move[1])
+				# Extract the destination peg
+				try:
+					user_dest_coords = peg_pos_dict[user_loaded_move[1]]
+				except:
+					print(str(user_loaded_move[1])+" isn't in the peg position dict")
 
-						pegs_on_board -= 1
+				# Need to validate each loaded move
+				# Origin and Destination characters must be peg position dictionary
+				if peg.validated_middle_peg(user_org_coords, user_dest_coords)[0]:
 
-				print("\nAfter loading the solution file, there are now {} peg(s) on the board\n"\
-					.format(pegs_on_board))
+					# Update the board as per the legal move
+					peg.update_board_pegs(user_org_coords, \
+						peg.validated_middle_peg(user_org_coords, user_dest_coords)[1],
+										 user_dest_coords, board_.board)
+					peg.add_move(user_loaded_move[0], user_loaded_move[1])
 
-				if pegs_on_board == 1:
-					print("Well done you've done it!")
-					quit()
+					pegs_on_board -= 1
 				else:
-					game_started = True
+					print("{} doesn't appear to be legal move".format(user_loaded_move))
+			else:
+				print("Invalid move : expected 2 character move input, for example, 'ox'")
 
-				load_moves_useable = True
-			except:
-				print("There seems to be an issue with the solution file loaded")
+		print("\nAfter loading the solution file there are now {} peg(s) on the board\n"\
+			.format(pegs_on_board))
+
+		if pegs_on_board == 1:
+			print("Well done - mission accomplished, you've done it!")
+			break
+		else:
+			game_started = True
+
 
 	# Display Rules
 	elif user_selection_start == 'R':
