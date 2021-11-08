@@ -293,22 +293,22 @@ class Board:
 
 class Menu:
     def display_welcome(self):
+        '''Display's Welcome Message when game is loaded'''
         print("Welcome to Peg Solitaire")
 
     def rules(self):
-        print("The rules of the game are...\n" +
-              "Peg solitaire is a game for one player. There are 33 pegs \n"+
-              "arranged in a 'plus' symbol configuration.\n"+
-              "The peg in the centre is removed. This leaves 32 pegs.\n"+
-              "The objective of the game is to end up with one peg in the middle hole (x). \n"+
-              "This is achieved by removing one peg at a time \n"+
-              "by jumping an adjacent peg over it into \n"+
-              "an adjacent empty hole in the other side.\n"+
-              "For example, the peg marked with a cross would be removed by \n"+
-              "jumping the peg marked with \n"+
-              "a triangle into the hole in the centre (shaded). \n"+
-              "No diagonal jumps are permitted.\n"+
-              "You can exit the game during play by typing 'EXIT'\n"+
+        print("The rules of the game are...\n" 
+              "* Peg solitaire is a game for one player. There are 33 pegs \n"
+              " arranged in a 'plus' symbol configuration.\n"
+              "* The peg in the centre is removed. This leaves 32 pegs.\n"
+              "* The objective of the game is to end up with one peg in the middle hole. \n"
+              "* This is achieved by removing one peg at a time by jumping an adjacent \n"
+              " peg over it into an adjacent empty hole in the other side.\n"
+              "* For example, the peg marked with a cross would be removed by \n"
+              " jumping the peg marked with a triangle into the hole in \n"
+              " the centre (shaded). \n"
+              "* No diagonal jumps are permitted.\n"
+              "* You can exit the game during play by typing 'EXIT'\n\n"
               "Now lets play!!\n")
 
     def initiate_game(self):
