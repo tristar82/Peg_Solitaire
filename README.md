@@ -7,6 +7,8 @@
 
 ## Content
 - [Assignment Description](#assignment-description)
+- [Instructions for Use](#[instructionsufor-use)
+- [Game Operation](#game-operation)
 - [Additional Libraries Used](#additional-libraries-used)
 - [Links](#links)
 
@@ -17,9 +19,13 @@ The purpose of this assignment was to create a functioning game of Peg Solitaire
 * allows a user to input moves step by step by loading a solution file that contains a chain of moves; and
 * logs the users moves and outputs the log to file.
 
+## Instructions for Use
+To run the TEXT based version of the game, run the "main.py" in the Python terminal. This will load the menu to faciliate game play.
+To run the Windows GUI version of the game, run the "GUI_main.py" in the Python terminal. This will launch a new window with buttons for different operations.
+
 ## Game Operation
 Once loaded, the game will ask the player to determine what they would like to do. The options are to Load a (**S**)oltion File, (**P**)lay the Game, Read the (**R**)ules or (**E**)xit.
-The aim of the game is to be lest with just 1 peg in the board.
+The aim of the game is to be left with just 1 peg in the board.
 If loading a partial solution file, the computer will make all the loaded moves before handing over to the player. Any subsequent moves will be appended to loaded moves and appear as a single file in the export.
 Upon exiting the game (after game play), a text file containing all legal moves will by generated and autosaved using the date time to create a unique file name.
 If playing the game, the following criteria must be satisfied for a move to be considered legal:
