@@ -6,11 +6,13 @@ from copy import copy
 import os
 import datetime
 
+
 class Peg:
     def __init__(self):
         self.legal_moves_list = []
 
-        self.direction_dict = {'U': [-1, 0], 'D': [1, 0], 'L': [0, -1], 'R': [0, 1]}
+        self.direction_dict = {'U': [-1, 0], 'D': [1, 0],
+                               'L': [0, -1], 'R': [0, 1]}
 
     def import_from_file(self):
         '''
@@ -19,11 +21,13 @@ class Peg:
         '''
         while True:
             try:
-                with open(input("Enter solution filename in full: "), 'r') as import_file:
+                with open(input("Enter solution filename in full: "), 'r') \
+                        as import_file:
                     file_contents = import_file.read()
                     import_file.close()
                     file_contents_clean = file_contents.strip().split(',')
-                    print("Solution file potentially containing {} move(s) opened successfully"\
+                    print("Solution file potentially containing {} " +
+                          "move(s) opened successfully"
                           .format(len(file_contents_clean)))
                     return file_contents_clean
 
@@ -41,10 +45,12 @@ class Peg:
             Origin location coordinates in [row, col] format
 
         move_direction: str(1)
-            Direction from origin to destination (i.e. (U)p, (D)own, (Left), (R)ight).
+            Direction from origin to destination (i.e. (U)p,
+            (D)own, (Left), (R)ight).
 
         dest_coords: list (2 elements)
-            Destination location coordinates in [row, col] format
+            Destination location coordinates in
+            [row, col] format
 
         board: 
             Current state of playing board
@@ -62,8 +68,8 @@ class Peg:
 
     def validated_middle_peg(self, org_coords, dest_coords):
         '''
-        Function to verify origin to destination direction, 
-        ensure the origin and destination are 2 pegs away from one another 
+        Function to verify origin to destination direction,
+        ensure the origin and destination are 2 pegs away from one another
         and to calculated the coordinated of the middle peg (between origin and
         destination)
 
@@ -89,25 +95,25 @@ class Peg:
         result = None
         middle_peg_pos = None
 
-        if org_coords[0] == dest_coords[0]: # same row
-            if abs(org_coords[1] - dest_coords[1]) == 2: # col is +/- 2
+        if org_coords[0] == dest_coords[0]:     # same row
+            if abs(org_coords[1] - dest_coords[1]) == 2:     # col is +/- 2
                 if org_coords[1] - dest_coords[1] < 0:
-                    move_direction = 'R' # right
+                    move_direction = 'R'     # right
                     result = True
 
                 else:
-                    move_direction = 'L' # left
+                    move_direction = 'L'     # left
                     result = True
 
             else:
                 result =  False
         elif abs(org_coords[0] - dest_coords[0]) == 2:
             if org_coords[0] - dest_coords[0] < 0:
-                move_direction = 'D'  # down
+                move_direction = 'D'      # down
                 result = True
 
             else:
-                move_direction = 'U'  # up
+                move_direction = 'U'      # up
                 result = True
 
         else:
@@ -117,7 +123,7 @@ class Peg:
             middle_peg_pos = [org_coords[0] + self.direction_dict[move_direction][0],
                               org_coords[1] + self.direction_dict[move_direction][1]]
         except:
-            middle_peg_pos = [9,9] #i.e. error
+            middle_peg_pos = [9,9]      # i.e. error
         
         return result, move_direction, middle_peg_pos
 
@@ -155,7 +161,7 @@ class Peg:
         '''
         while input_char not in peg_dict.keys():
             input_char = input(
-                'Please enter a single character position for {} as found on the board: '\
+                'Please enter a single character position for {} as found on the board: '
                     .format(location.upper()))
         return peg_dict[input_char], input_char
 
@@ -206,9 +212,9 @@ class Board:
 
         self.peg_pos_dict = peg_position_dict
 
-        # Create a dictionary that determines relative coordinate 
+        # Create a dictionary that determines relative coordinate
         # adjustments based on the direction from the origin to destination.
-        self.direction_dict = {'U': [-1, 0], 'D': [1, 0], 'L': [0, -1], 'R': [0, 1]}        
+        self.direction_dict = {'U': [-1, 0], 'D': [1, 0], 'L': [0, -1], 'R': [0, 1]}
 
     def print_board(self, pegs_on_board):
         '''
@@ -217,7 +223,7 @@ class Board:
         '''
         board = self.board
         
-        # Creates a visual representation of the board from the list of 
+        # Creates a visual representation of the board from the list of
         # lists (of None, True, False) - found in __init__
         board_viz = {None: ' ', True: '.', False: 'o'}
         display_board = []
@@ -227,14 +233,15 @@ class Board:
                 display_board_sub.append(board_viz[col])
             display_board.append(display_board_sub)
 
-        # Sets up the table 
+        # Sets up the table
         heading_text = "{} Pegs Remaining on Board".format(pegs_on_board)
         table = Table(title=heading_text, show_lines=True)
 
         table.add_column(" ")
 
         for i in range(7):
-            table.add_column(str(i), justify='right', style="cyan", no_wrap=True)
+            table.add_column(str(i), justify='right',
+                             style="cyan", no_wrap=True)
 
         # Assinging a variable named 'view' of the rows (and columns) created above
         view = copy(display_board)
@@ -286,7 +293,7 @@ class Board:
 
     def is_middle_filled(self, org_coords, board, move_direction):
         '''
-        Function to check if middle peg hole is empty. 
+        Function to check if middle peg hole is empty.
         Uses origin peg coordinate and move direction to determine
         '''
         return board[org_coords[0] + self.direction_dict[move_direction][0]]\
@@ -308,7 +315,7 @@ class Menu:
         print("Welcome to Peg Solitaire")
 
     def rules(self):
-        print("The rules of the game are...\n" 
+        print("The rules of the game are...\n"
               "* Peg solitaire is a game for one player. There are 33 pegs \n"
               " arranged in a 'plus' symbol configuration.\n"
               "* The peg in the centre is removed. This leaves 32 pegs.\n"
@@ -325,9 +332,9 @@ class Menu:
     def initiate_game(self):
         print("Options are (R)ules, Load (S)olution File, (P)lay game or (E)xit")
         valid_selection = False
-        while valid_selection == False:
+        while not valid_selection:
             user_selection_start = input("Please enter selection: ").upper()
-            if user_selection_start in ['R','S','P','E']:
+            if user_selection_start in ['R', 'S', 'P', 'E']:
                 return user_selection_start
                 valid_selection = True
             else:
