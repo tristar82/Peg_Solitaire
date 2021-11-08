@@ -20,7 +20,8 @@ class Peg:
                     file_contents = import_file.read()
                     import_file.close()
                     file_contents_clean = file_contents.strip().split(',')
-                    print("Solution file containing {} moved located and opened successfully".format(len(file_contents_clean)))
+                    print("Solution file containing {} moved located and opened successfully"\
+                          .format(len(file_contents_clean)))
                     return file_contents_clean
 
             except OSError as e:
@@ -151,7 +152,8 @@ class Peg:
         '''
         while input_char not in peg_dict.keys():
             input_char = input(
-                'Please enter a single character position for {} as found on the board: '.format(location.upper()))
+                'Please enter a single character position for {} as found on the board: '\
+                    .format(location.upper()))
         return peg_dict[input_char], input_char
 
     def auto_export_to_file(self):
