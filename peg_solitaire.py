@@ -13,14 +13,17 @@ class Peg:
         self.direction_dict = {'U': [-1, 0], 'D': [1, 0], 'L': [0, -1], 'R': [0, 1]}
 
     def import_from_file(self):
-        '''Function to load in saved moved from a text file. Assumes file in current working directory'''
+        '''
+        Function to load in saved moved from a text file.
+        Assumes file in current working directory
+        '''
         while True:
             try:
                 with open(input("Enter solution filename in full: "), 'r') as import_file:
                     file_contents = import_file.read()
                     import_file.close()
                     file_contents_clean = file_contents.strip().split(',')
-                    print("Solution file containing {} moved located and opened successfully"\
+                    print("Solution file potentially containing {} move(s) opened successfully"\
                           .format(len(file_contents_clean)))
                     return file_contents_clean
 
@@ -75,10 +78,10 @@ class Peg:
         Returns
         -------
         3 elements
-            Element 1 (index 0) is a list with the coordinates of the 
-                character entered, in the format [row,col]
-            Element 2 (index 1) is the final character selected (as may 
-                be different as the input character, due to error handling)
+            Element 1 (index 0) is a boolean (True/ False) indicating if this
+                was a legal move
+            Element 2 (index 1) is the move direction (i.e. (U)p, (D)own, (L)eft
+                or (R)ight.
             Element 3 (index 2) is a list with the coordinates of the 
                 middle peg position determined, in the format [row,col]
         '''
