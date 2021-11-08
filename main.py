@@ -39,7 +39,7 @@ while not game_started:
 				try:
 					user_dest_coords = peg_pos_dict[user_loaded_move[1]]
 				except:
-					print("The DESTINATION {} isn't in the peg position dict"\
+					print("The DESTINATION {} isn't in the peg position dict"
 						  .format(user_loaded_move[1]))
 
 				# Need to validate each loaded move
@@ -94,7 +94,7 @@ while pegs_on_board > 1:
 	while not peg.validated_middle_peg(org_coords, dest_coords)[0]:
 
 		valid_user_selection = False
-		while valid_user_selection == False:
+		while not valid_user_selection:
 			raw_move_chars = input("Please enter your move (or EXIT to quit): ")
 			if len(raw_move_chars) == 2:
 				org_coords, org_char = peg.verify_input_char(raw_move_chars[0],
