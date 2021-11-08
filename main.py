@@ -22,7 +22,7 @@ while game_started == False:
 	user_selection_start = menu.initiate_game()
 
 	# Load Solutions File
-	if user_selection_start == 'S': #added new rows 26-57
+	if user_selection_start == 'S':
 		load_moves_useable = False
 		while  load_moves_useable == False:
 			try:
@@ -111,7 +111,7 @@ while pegs_on_board > 1:
 		print('Nice! Move successful\n')
 
 	else:
-		print("Are ORIGIN and MIDDLE holes empty filled and DESTINATION empty?")
+		print("Are ORIGIN and MIDDLE holes filled and DESTINATION empty?")
 
 
 peg.auto_export_to_file()
