@@ -32,13 +32,13 @@ while not game_started:
 				try:
 					user_org_coords = peg_pos_dict[user_loaded_move[0]]
 				except:
-					print(str(user_loaded_move[0])+" isn't in peg position dict")
+					print("The ORIGIN {} isn't in the peg position dict".format(user_loaded_move[0]))
 
 				# Extract the destination peg
 				try:
 					user_dest_coords = peg_pos_dict[user_loaded_move[1]]
 				except:
-					print(str(user_loaded_move[1])+" isn't in the peg position dict")
+					print("The DESTINATION {} isn't in the peg position dict".format(user_loaded_move[1]))
 
 				# Need to validate each loaded move
 				# Origin and Destination characters must be peg position dictionary
@@ -54,7 +54,7 @@ while not game_started:
 				else:
 					print("{} doesn't appear to be legal move".format(user_loaded_move))
 			else:
-				print("Invalid move : expected 2 character move input, for example, 'ox'")
+				print("Invalid move '{}': expected 2 character move input, for example, 'ox'".format(user_loaded_move))
 
 		print("\nAfter loading the solution file there are now {} peg(s) on the board\n"\
 			.format(pegs_on_board))
