@@ -32,22 +32,24 @@ while not game_started:
 				try:
 					user_org_coords = peg_pos_dict[user_loaded_move[0]]
 				except:
-					print("The ORIGIN {} isn't in the peg position dict".format(user_loaded_move[0]))
+					print("The ORIGIN {} isn't in the peg position dict"
+						.format(user_loaded_move[0]))
 
 				# Extract the destination peg
 				try:
 					user_dest_coords = peg_pos_dict[user_loaded_move[1]]
 				except:
-					print("The DESTINATION {} isn't in the peg position dict".format(user_loaded_move[1]))
+					print("The DESTINATION {} isn't in the peg position dict"\
+						  .format(user_loaded_move[1]))
 
 				# Need to validate each loaded move
 				# Origin and Destination characters must be peg position dictionary
 				if peg.validated_middle_peg(user_org_coords, user_dest_coords)[0]:
 
 					# Update the board as per the legal move
-					peg.update_board_pegs(user_org_coords, \
+					peg.update_board_pegs(user_org_coords,
 						peg.validated_middle_peg(user_org_coords, user_dest_coords)[1],
-										 user_dest_coords, board_.board)
+										  user_dest_coords, board_.board)
 					peg.add_move(user_loaded_move[0], user_loaded_move[1])
 
 					pegs_on_board -= 1
@@ -95,10 +97,10 @@ while pegs_on_board > 1:
 		while valid_user_selection == False:
 			raw_move_chars = input("Please enter your move (or EXIT to quit): ")
 			if len(raw_move_chars) == 2:
-				org_coords, org_char = peg.verify_input_char(raw_move_chars[0], \
-					peg_pos_dict, 'origin')
-				dest_coords, dest_char = peg.verify_input_char(raw_move_chars[1], \
-					peg_pos_dict, 'destination')
+				org_coords, org_char = peg.verify_input_char(raw_move_chars[0],
+						peg_pos_dict, 'origin')
+				dest_coords, dest_char = peg.verify_input_char(raw_move_chars[1],
+						peg_pos_dict, 'destination')
 				valid_user_selection = True
 			elif raw_move_chars.upper() == "EXIT":
 				peg.auto_export_to_file()
@@ -106,12 +108,12 @@ while pegs_on_board > 1:
 			else:
 				print("Selection doesn't look right. Please try again. ")
 
-	## Get direction of travel (origin to destination)
+	# Get direction of travel (origin to destination)
 	move_direction = peg.validated_middle_peg(org_coords, dest_coords)[1]
 
 	if board_.is_middle_filled(org_coords, board_.board, move_direction) \
-			and board_.is_destination_empty(dest_coords, board_.board) \
-			and board_.is_origin_filled(org_coords, board_.board):
+		and board_.is_destination_empty(dest_coords, board_.board) \
+		and board_.is_origin_filled(org_coords, board_.board):
 
 		peg.update_board_pegs(org_coords, move_direction, dest_coords, board_.board)
 		peg.add_move(org_char, dest_char)
