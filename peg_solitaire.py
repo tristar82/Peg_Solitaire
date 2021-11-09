@@ -57,12 +57,10 @@ class Peg:
             Current state of playing board
 
         '''
-        print("fn called: update_board_pegs")
         # origin hole to be emptied
-        print([i.count(True) for i in board])
         board[org_coords[0]][org_coords[1]] = False
 
-        # middle coords updated
+        # middle hole to be emptied
         board[org_coords[0] \
             + self.direction_dict[move_direction][0]][org_coords[1]
             + self.direction_dict[move_direction][1]] \
@@ -70,7 +68,6 @@ class Peg:
 
         # destination filled
         board[dest_coords[0]][dest_coords[1]] = True
-        print([i.count(True) for i in board])
 
     def validated_middle_peg(self, org_coords, dest_coords):
         '''
@@ -131,8 +128,6 @@ class Peg:
         except:
             middle_peg_pos = [9, 9]      # i.e. error
 
-        print(move_direction)
-        print(result)
         return result, move_direction, middle_peg_pos
 
 
@@ -302,8 +297,9 @@ class Board:
         Function to check if middle peg hole is empty.
         Uses origin peg coordinate and move direction to determine
         '''
-        return board[org_coords[0] + self.direction_dict[move_direction][0]]\
-            [org_coords[1] + self.direction_dict[move_direction][1]]
+        if move_direction != 'X':
+            return board[org_coords[0] + self.direction_dict[move_direction][0]]\
+                [org_coords[1] + self.direction_dict[move_direction][1]]
 
     def is_destination_empty(self, destination_peg_coords, board):
         '''Function to check if destination peg hole is empty'''
