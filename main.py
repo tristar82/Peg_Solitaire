@@ -131,9 +131,10 @@ while pegs_on_board > 1:
 	# Get direction of travel (origin to destination)
 	move_direction = peg.validated_middle_peg(org_coords, dest_coords)[1]
 
-	if board_.is_middle_filled(org_coords, board_.board, move_direction) \
-		and board_.is_destination_empty(dest_coords, board_.board) \
-		and board_.is_origin_filled(org_coords, board_.board):
+	# Ensuring conditions are met (i.e. origin and middle holes filled and destination empty
+	if board_.is_origin_filled(org_coords, board_.board) \
+			and board_.is_middle_filled(org_coords, board_.board, move_direction) \
+			and board_.is_destination_empty(dest_coords, board_.board):
 
 		# Update the board as per the legal move
 		peg.update_board_pegs(org_coords, move_direction, dest_coords, board_.board)

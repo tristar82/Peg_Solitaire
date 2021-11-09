@@ -30,9 +30,9 @@ class Peg:
                     print("Solution file potentially containing "
                           + "{} move(s) opened successfully".format(n_moves_found))
                     return file_contents_clean
-                ### change this as find out all the different types of error...
-            except OSError as e:
-                print("Error - Solution file not imported successfully", e)
+            except FileNotFoundError:
+                print("Sorry player, no such solution file found")
+
 
     def update_board_pegs(self, org_coords, move_direction,
                           dest_coords, board):
