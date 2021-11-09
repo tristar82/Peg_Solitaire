@@ -7,7 +7,6 @@ from tkinter.messagebox import showerror
 import os
 import datetime
 
-####### start of import from Text Game
 from peg_solitaire import Board
 from peg_solitaire import Peg
 from peg_solitaire import Menu
@@ -42,6 +41,7 @@ class Application(tk.Frame):
         self.board = board_.board
         self.user_org_coords = [9, 9]  # using for move validation when importing files
         self.user_dest_coords = [9, 9]  # using for move validation when importing files
+        self.load_error_count = 0
 
     def display_label(self):
         '''Function to display number of pegs remaining'''
@@ -49,7 +49,8 @@ class Application(tk.Frame):
 
     def create_grid_coords(self):
         '''Function to create board grid coordinates for GUI'''
-        raw_grid = [[not row == ele == 3 if ele in [2, 3, 4] or row in [2, 3, 4] else None for row in range(7)] for ele
+        raw_grid = [[not row == ele == 3 if ele in [2, 3, 4] or
+                                            row in [2, 3, 4] else None for row in range(7)] for ele
                     in range(7)]
         for row in range(len(raw_grid)):
             for col in range(len(raw_grid[row])):
@@ -71,47 +72,7 @@ class Application(tk.Frame):
         '''
         peg.auto_export_to_file()
 
-    # def load_moves(self):
-    #     '''Function to open text file, via file browser. Text file loaded into a variable'''
-    #     global pegs_on_board
-    #     self.fname = askopenfilename(filetypes=(("Solution Files", "*.txt"),("All files", "*.*") ))
-    #     if self.fname != '':
-    #         file_contents = open(self.fname)
-    #         data = file_contents.read()
-    #         file_contents.close()
-    #         user_loaded_moves = data.strip().split(',')
-    #
-    #         # Cycle though the loaded moves
-    #         for user_loaded_move in user_loaded_moves:
-    #             if len(user_loaded_move) == 2:
-    #
-    #             # Extract the origin peg
-    #             user_org_coords = peg_pos_dict[user_loaded_move[0]]
-    #             # Extract the destination peg
-    #             user_dest_coords = peg_pos_dict[user_loaded_move[1]]
-    #
-    #             # Update the board as per the legal move
-    #             peg.update_board_pegs(user_org_coords, \
-    #                                   peg.validated_middle_peg(user_org_coords, user_dest_coords)[1],
-    #                                   user_dest_coords, board_.board)
-    #             peg.add_move(user_loaded_move[0], user_loaded_move[1])
-    #
-    #             pegs_on_board -= 1
-    #             self.create_widgets()
-
-    def reset_game(self):
-        '''
-        Function to reset game
-        '''
-        self.board = board_.board
-        pegs_on_board = 32
-        game_started = False
-        state_of_play = 0
-        self.create_widgets()
-        print("reset game")
-
-
-    def load_moves2(self):
+    def load_moves(self):
         '''Function to open text file, via file browser. Text file loaded into a variable'''
         global pegs_on_board
         self.fname = askopenfilename(filetypes=(("Solution Files", "*.txt"), ("All files", "*.*")))
@@ -120,14 +81,14 @@ class Application(tk.Frame):
             data = file_contents.read()
             file_contents.close()
             user_loaded_moves = data.strip().split(',')
-
+            imported_move_count = len(user_loaded_moves)
             # Cycle though the loaded moves
             for user_loaded_move in user_loaded_moves:
                 if len(user_loaded_move) == 2:
                     # Extracting origin
                     try:
                         self.user_org_coords = peg_pos_dict[user_loaded_move[0]]
-                        # Extracting desintation
+                        # Extracting destination
                         self.user_dest_coords = peg_pos_dict[user_loaded_move[1]]
 
                         # Ensuring origin and middle are filled and destination are empty.
@@ -152,18 +113,26 @@ class Application(tk.Frame):
                                 pegs_on_board -= 1
                                 self.create_widgets()
                     except:
-                        pass # if the move doesn't work, I want it to move to the next one.
+                        self.load_error_count += 1
+                else:
+                    self.load_error_count += 1
+
+            tk.messagebox.showinfo(title="Import Complete",
+                                   message="This import contained {} moves: {} pegs ".format(imported_move_count,
+                                                                                             pegs_on_board)
+                                           + "remain and there were {} error(s)".format(self.load_error_count))
+            # resetting after warning box is displayed
+            load_error_count = 0
 
     def create_widgets(self):
         '''Function to create all colour coded buttons (i.e. pegs/ holes)'''
         self.chars_copy = self.chars.copy()
         for c in self.coords:
             button_letter = self.chars_copy.pop(0)
-            ####
-            board_viz = {None: ' ', True: 'blue', False: 'red'}
+            board_viz = {None: ' ', True: 'red', False: 'white'}
             hole_description = board_.board[c[0]][c[1]]
             button_colour =  board_viz[hole_description]
-            ####
+
             tk.Button(self,
                       text=button_letter,
                       height = 2,
@@ -173,32 +142,24 @@ class Application(tk.Frame):
                       command=lambda button_entry_coords = c : set_coords(button_entry_coords, state_of_play)
                       ).grid(row=c[0], column=c[1])
 
-        tk.Button(self, text="Load", command=self.load_moves2).grid(row=7, column=2)
+        tk.Button(self, text="Load", command=self.load_moves).grid(row=7, column=2)
         tk.Button(self, text="Save", command=peg.auto_export_to_file).grid(row=7, column=3)
-        tk.Button(self, text="Reset", command=self.reset_game).grid(row=7, column=5)
         tk.Button(self, text="Quit", command=self.quit_game).grid(row=7, column=4)
-
-        tk.Label(text=pegs_on_board).grid(row=7, column=0)
-
-
 
 def set_coords(coords, state_of_play_input):
     '''Function to capture the coords and their identity i.e. origin or destination'''
     global org_coords_input
     global dest_coords_input
-    global state_of_play  # can remove if commenting out the bottom line below.
-
-    tk.Label(text=pegs_on_board).grid(row=7, column=0)
+    global state_of_play
 
     if state_of_play_input == 0:
-        tk.Label(text="Click on Destination Hole").grid(row=8, column=0)
         org_coords_input = coords
         state_of_play = 1
 
     elif state_of_play_input == 1:
         dest_coords_input = coords
         game_play(org_coords_input, dest_coords_input)
-        tk.Label(text="Click on Origin Peg").grid(row=8, column=0)
+        state_of_play = 0
 
 
 def game_play(org_coords, dest_coords):
@@ -215,9 +176,11 @@ def game_play(org_coords, dest_coords):
 
     if not peg.validated_middle_peg(org_coords, dest_coords)[0]:
         state_of_play = 0
-        #print("Not a valid move. Select your next origin peg")
+        tk.messagebox.showinfo(title="Player Information",
+                               message="Not a valid move. Select your next origin peg")
+
     elif peg.validated_middle_peg(org_coords, dest_coords)[0]:
-        ## Get direction of travel (origin to destination)
+        # Get direction of travel (origin to destination)
         move_direction = peg.validated_middle_peg(org_coords, dest_coords)[1]
 
         if board_.is_middle_filled(org_coords, board_.board, move_direction) \
@@ -233,12 +196,11 @@ def game_play(org_coords, dest_coords):
             root.create_widgets()
             if pegs_on_board == 1:
                 peg.auto_export_to_file()
-        else:
-            print("Are ORIGIN and MIDDLE holes empty filled and DESTINATION empty?")
 
 
 root = tk.Tk()
 root.title("Peg Solitaire")
-root.geometry("350x350")
+root.geometry("370x370")
 root = Application(root)
+root.display_label()
 root.mainloop()
