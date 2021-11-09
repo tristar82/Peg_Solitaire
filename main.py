@@ -21,7 +21,9 @@ menu.display_welcome()
 while not game_started:
 	user_selection_start = menu.initiate_game()
 
-	# Load Solutions File
+	# Given there are 4 menu options, we'll address each one in turn
+
+	# Load (S)olution File
 	if user_selection_start == 'S':
 		user_loaded_moves = peg.import_from_file()
 
@@ -32,15 +34,15 @@ while not game_started:
 				try:
 					user_org_coords = peg_pos_dict[user_loaded_move[0]]
 				except:
-					print("The ORIGIN {} isn't in the peg position dict"
-						.format(user_loaded_move[0]))
+					print("The ORIGIN {} ".format(user_loaded_move[0])
+						+ "isn't in the peg position dict")
 
 				# Extract the destination peg
 				try:
 					user_dest_coords = peg_pos_dict[user_loaded_move[1]]
 				except:
-					print("The DESTINATION {} isn't in the peg position dict"
-						  .format(user_loaded_move[1]))
+					print("The DESTINATION {} ".format(user_loaded_move[1])
+						+ "isn't in the peg position dict")
 
 				# Need to validate each loaded move
 				# Origin and Destination characters must be peg position dictionary
@@ -56,6 +58,11 @@ while not game_started:
 
 					# Updating pegs on board up to reflect legal move
 					pegs_on_board -= 1
+					varX = 0
+					for row in board_.board:
+					 	varX += row.count(True)
+					print("{} pegs and {} TRUEs".format(varX, pegs_on_board))
+
 				else:
 					print("{} doesn't appear to be legal move".format(user_loaded_move))
 			else:
@@ -71,15 +78,15 @@ while not game_started:
 		else:
 			game_started = True
 
-	# Display Rules
+	# Display (R)ules
 	elif user_selection_start == 'R':
 		menu.rules()
 
-	# Exit
+	# (E)xit
 	elif user_selection_start == 'E':
 		quit()
 
-	# Play
+	# (P)lay
 	else:
 		game_started = True
 
