@@ -29,21 +29,26 @@ while not game_started:
 
 		# Cycle though the loaded moves
 		for user_loaded_move in user_loaded_moves:
+			print("---------------------------")
 			if len(user_loaded_move) == 2:
 				######
 				varY = 0
 				for row in board_.board:
 					varY += row.count(True)
-				print("start of loop: {} pegs and {} TRUEs".format(varY, pegs_on_board))
+				#print("start of loop: {} pegs and {} TRUEs".format(varY, pegs_on_board))
 				######
 
 
 				# Extract the origin peg
+				# Setting as out of bounds coord to be updated with the correct coords (form dict)
+				user_org_coords = [9, 9]
+				user_dest_coords = [9, 9]
 				try:
 					user_org_coords = peg_pos_dict[user_loaded_move[0]]
 				except:
 					print("The ORIGIN {} ".format(user_loaded_move[0])
 						+ "isn't in the peg position dict")
+					continue
 
 				# Extract the destination peg
 				try:
@@ -51,26 +56,39 @@ while not game_started:
 				except:
 					print("The DESTINATION {} ".format(user_loaded_move[1])
 						+ "isn't in the peg position dict")
+					continue
 
-				# Need to validate each loaded move
-				# Origin and Destination characters must be peg position dictionary
-				if peg.validated_middle_peg(user_org_coords, user_dest_coords)[0]:
+				# Ensuring origin and middle are filled and destination are empty.
+				# if not peg.validated_middle_peg(user_org_coords, user_dest_coords)[1]:
+				# 	move_direction = False
+				# else:
+				# 	move_direction = peg.validated_middle_peg(user_org_coords, user_dest_coords)[1]
+				move_direction = peg.validated_middle_peg(user_org_coords, user_dest_coords)[1]
+				print("move direction is {}".format(move_direction))
 
-					# Update the board as per the legal move
-					peg.update_board_pegs(user_org_coords,
-						peg.validated_middle_peg(user_org_coords, user_dest_coords)[1],
-										  user_dest_coords, board_.board)
-					######
-					print("I've update the board with {}!!!".format(user_loaded_move))
-					# Appending legal move to list
-					peg.add_move(user_loaded_move[0], user_loaded_move[1])
+				if board_.is_origin_filled(user_org_coords, board_.board) \
+						and board_.is_destination_empty(user_dest_coords, board_.board): #\
+						#and board_.is_middle_filled(user_org_coords, board_.board, move_direction)
 
-					# Updating pegs on board up to reflect legal move
-					pegs_on_board -= 1
-					varX = 0
-					for row in board_.board:
-					 	varX += row.count(True)
-					print("{} pegs and {} TRUEs- usermove:{}".format(varX, pegs_on_board, user_loaded_move))
+					# Need to validate each loaded move
+					# Origin and Destination characters must be peg position dictionary
+					if peg.validated_middle_peg(user_org_coords, user_dest_coords)[0]:
+						print("if valid move called")
+						# Update the board as per the legal move
+						peg.update_board_pegs(user_org_coords,
+							peg.validated_middle_peg(user_org_coords, user_dest_coords)[1],
+											  user_dest_coords, board_.board)
+						######
+						#print("I've update the board with {}!!!".format(user_loaded_move))
+						# Appending legal move to list
+						peg.add_move(user_loaded_move[0], user_loaded_move[1])
+
+						# Updating pegs on board up to reflect legal move
+						pegs_on_board -= 1
+						varX = 0
+						for row in board_.board:
+							varX += row.count(True)
+						print("{} TRUEs and {} pegs- usermove:{}".format(varX, pegs_on_board, user_loaded_move))
 
 				else:
 					print("{} doesn't appear to be legal move".format(user_loaded_move))

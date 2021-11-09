@@ -57,7 +57,9 @@ class Peg:
             Current state of playing board
 
         '''
+        print("fn called: update_board_pegs")
         # origin hole to be emptied
+        print([i.count(True) for i in board])
         board[org_coords[0]][org_coords[1]] = False
 
         # middle coords updated
@@ -68,6 +70,7 @@ class Peg:
 
         # destination filled
         board[dest_coords[0]][dest_coords[1]] = True
+        print([i.count(True) for i in board])
 
     def validated_middle_peg(self, org_coords, dest_coords):
         '''
@@ -94,7 +97,7 @@ class Peg:
             Element 3 (index 2) is a list with the coordinates of the
                 middle peg position determined, in the format [row,col]
         '''
-        move_direction = None
+        move_direction = 'X'
         result = None
         middle_peg_pos = None
 
@@ -127,8 +130,11 @@ class Peg:
                               org_coords[1] + self.direction_dict[move_direction][1]]
         except:
             middle_peg_pos = [9, 9]      # i.e. error
-        
+
+        print(move_direction)
+        print(result)
         return result, move_direction, middle_peg_pos
+
 
     def add_move(self, org_char, dest_char):
         '''Appends legal moves to a list for export i.e. ox for a move of peg
@@ -258,7 +264,7 @@ class Board:
 
     def print_map(self, peg_pos_dict):
         '''
-        Function that prints the map of peg positions relative to the playing board. 
+        Function that prints the map of peg positions relative to the playing board.
         Uses the peg position dictionary
         '''
         table = Table(title="Solitaire Peg Board Character Map", show_lines=True)
@@ -308,6 +314,7 @@ class Board:
         '''Function to check if origin peg hole is empty'''
         return not board[origin_peg_coords[0]][origin_peg_coords[1]] \
                    in [None, False]
+
 
 class Menu:
     def display_welcome(self):
