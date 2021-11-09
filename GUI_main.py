@@ -112,15 +112,20 @@ class Application(tk.Frame):
                                 # Updating pegs on board up to reflect legal move
                                 pegs_on_board -= 1
                                 self.create_widgets()
+                                root.display_label()
+
                     except:
                         self.load_error_count += 1
                 else:
                     self.load_error_count += 1
 
-            tk.messagebox.showinfo(title="Import Complete",
-                                   message="This import contained {} moves: {} pegs ".format(imported_move_count,
-                                                                                             pegs_on_board)
-                                           + "remain and there were {} error(s)".format(self.load_error_count))
+            if pegs_on_board == 1:
+                tk.messagebox.showinfo(title="Winner!", message="Great Scott - you've done it! Well done!")
+            else:
+                tk.messagebox.showinfo(title="Import Complete",
+                                       message="This import contained {} moves: {} pegs ".format(imported_move_count,
+                                                                                                 pegs_on_board)
+                                               + "remain and there were {} error(s)".format(self.load_error_count))
             # resetting after warning box is displayed
             load_error_count = 0
 
@@ -195,12 +200,12 @@ def game_play(org_coords, dest_coords):
 
             root.create_widgets()
             if pegs_on_board == 1:
+                tk.messagebox.showinfo(title="Winner!", message="Great Scott - you've done it! Well done!")
                 peg.auto_export_to_file()
 
 
 root = tk.Tk()
 root.title("Peg Solitaire")
-root.geometry("370x370")
+root.geometry("295x355")
 root = Application(root)
-root.display_label()
 root.mainloop()
