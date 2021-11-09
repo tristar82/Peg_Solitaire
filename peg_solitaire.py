@@ -283,10 +283,6 @@ class Board:
             pegs_row[self.peg_pos_dict[letter][0]][self.peg_pos_dict[letter][1]]\
                 = letter
 
-        # Assinging a variable named 'view' of the
-        # rows (and columns) created above
-        #view = copy(pegs_row)
-
         # Adding rows to rich table
         for row_i in range(7):
             table.add_row(str(row_i), *pegs_row[row_i])
