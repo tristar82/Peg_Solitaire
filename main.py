@@ -50,14 +50,17 @@ while not game_started:
 					peg.update_board_pegs(user_org_coords,
 						peg.validated_middle_peg(user_org_coords, user_dest_coords)[1],
 										  user_dest_coords, board_.board)
+
+					# Appending legal move to list
 					peg.add_move(user_loaded_move[0], user_loaded_move[1])
 
+					# Updating pegs on board up to reflect legal move
 					pegs_on_board -= 1
 				else:
 					print("{} doesn't appear to be legal move".format(user_loaded_move))
 			else:
 				print("Invalid move '{}': expected".format(user_loaded_move)
-					  + " 2 character move input, for example, 'ox'")
+					  + " input, for example, 'ox'")
 
 		print("\nAfter loading the solution file there are"
 				+ " now {} peg(s) on the board\n".format(pegs_on_board))
@@ -115,8 +118,13 @@ while pegs_on_board > 1:
 		and board_.is_destination_empty(dest_coords, board_.board) \
 		and board_.is_origin_filled(org_coords, board_.board):
 
+		# Update the board as per the legal move
 		peg.update_board_pegs(org_coords, move_direction, dest_coords, board_.board)
+
+		# Appending legal move to list
 		peg.add_move(org_char, dest_char)
+
+		# Updating pegs on board up to reflect legal move
 		pegs_on_board -= 1
 
 		print('Nice! Move successful\n')
