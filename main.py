@@ -56,17 +56,17 @@ while not game_started:
 				else:
 					print("{} doesn't appear to be legal move".format(user_loaded_move))
 			else:
-				print("Invalid move '{}': expected 2 character move input, for example, 'ox'".format(user_loaded_move))
+				print("Invalid move '{}': expected".format(user_loaded_move)
+					  + " 2 character move input, for example, 'ox'")
 
-		print("\nAfter loading the solution file there are now {} peg(s) on the board\n"\
-			.format(pegs_on_board))
+		print("\nAfter loading the solution file there are"
+				+ " now {} peg(s) on the board\n".format(pegs_on_board))
 
 		if pegs_on_board == 1:
 			print("Well done - mission accomplished, you've done it!")
 			break
 		else:
 			game_started = True
-
 
 	# Display Rules
 	elif user_selection_start == 'R':
@@ -88,8 +88,8 @@ while pegs_on_board > 1:
 	print("There are {} pegs remaining on the board".format(pegs_on_board))
 
 	# Setting dummy coordinates, ready to validate user entry moves
-	org_coords = [9,9]
-	dest_coords = [9,9]
+	org_coords = [9, 9]
+	dest_coords = [9, 9]
 
 	while not peg.validated_middle_peg(org_coords, dest_coords)[0]:
 
