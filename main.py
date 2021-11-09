@@ -30,6 +30,14 @@ while not game_started:
 		# Cycle though the loaded moves
 		for user_loaded_move in user_loaded_moves:
 			if len(user_loaded_move) == 2:
+				######
+				varY = 0
+				for row in board_.board:
+					varY += row.count(True)
+				print("start of loop: {} pegs and {} TRUEs".format(varY, pegs_on_board))
+				######
+
+
 				# Extract the origin peg
 				try:
 					user_org_coords = peg_pos_dict[user_loaded_move[0]]
@@ -52,7 +60,8 @@ while not game_started:
 					peg.update_board_pegs(user_org_coords,
 						peg.validated_middle_peg(user_org_coords, user_dest_coords)[1],
 										  user_dest_coords, board_.board)
-
+					######
+					print("I've update the board with {}!!!".format(user_loaded_move))
 					# Appending legal move to list
 					peg.add_move(user_loaded_move[0], user_loaded_move[1])
 
@@ -61,7 +70,7 @@ while not game_started:
 					varX = 0
 					for row in board_.board:
 					 	varX += row.count(True)
-					print("{} pegs and {} TRUEs".format(varX, pegs_on_board))
+					print("{} pegs and {} TRUEs- usermove:{}".format(varX, pegs_on_board, user_loaded_move))
 
 				else:
 					print("{} doesn't appear to be legal move".format(user_loaded_move))
