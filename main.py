@@ -84,7 +84,7 @@ while not game_started:
 
 		if pegs_on_board == 1:
 			print("Well done - mission accomplished, you've done it!")
-			break
+			quit()
 		else:
 			game_started = True
 
@@ -152,3 +152,4 @@ while pegs_on_board > 1:
 
 
 peg.auto_export_to_file()
+quit()
