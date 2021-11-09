@@ -45,7 +45,8 @@ class Application(tk.Frame):
 
     def display_label(self):
         '''Function to display number of pegs remaining'''
-        tk.Label(text="{}".format(pegs_on_board)).grid(row=7, column=0)
+        tk.Label(text="{}".format(pegs_on_board),
+                 font=("Helvetica", 14)).grid(row=7, column=0)
 
     def create_grid_coords(self):
         '''Function to create board grid coordinates for GUI'''
@@ -82,6 +83,7 @@ class Application(tk.Frame):
             file_contents.close()
             user_loaded_moves = data.strip().split(',')
             imported_move_count = len(user_loaded_moves)
+
             # Cycle though the loaded moves
             for user_loaded_move in user_loaded_moves:
                 if len(user_loaded_move) == 2:
@@ -206,6 +208,6 @@ def game_play(org_coords, dest_coords):
 
 root = tk.Tk()
 root.title("Peg Solitaire")
-root.geometry("295x355")
+root.geometry("295x365")
 root = Application(root)
 root.mainloop()
