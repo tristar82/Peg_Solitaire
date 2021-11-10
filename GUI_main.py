@@ -3,7 +3,6 @@
 import tkinter as tk
 from tkinter.filedialog import askopenfilename
 from tkinter.messagebox import showerror
-import sys ##
 import os
 import datetime
 
@@ -27,6 +26,7 @@ state_of_play = 0
 org_coords_input = None
 dest_coords_input = None
 
+
 class Application(tk.Frame):
     def __init__(self, master):
         """This initializes the application frame"""
@@ -38,7 +38,6 @@ class Application(tk.Frame):
         self.chars = self.base + ['x'] + [i.upper() for i in self.base[::-1]]
         self.create_grid_coords()
         self.create_widgets()
-        self.board = board_.board
         self.user_org_coords = [9, 9]  # using for move validation when importing files
         self.user_dest_coords = [9, 9]  # using for move validation when importing files
         self.load_error_count = 0
@@ -129,14 +128,14 @@ class Application(tk.Frame):
                                                                                                  pegs_on_board)
                                                + "remain and there were {} error(s)".format(self.load_error_count))
             # resetting after warning box is displayed
-            load_error_count = 0
+            self.load_error_count = 0
 
     def create_widgets(self):
         '''Function to create all colour coded buttons (i.e. pegs/ holes)'''
         self.chars_copy = self.chars.copy()
         for c in self.coords:
             button_letter = self.chars_copy.pop(0)
-            board_viz = {None: ' ', True: 'red', False: 'white', 'P': 'yellow'}
+            board_viz = {None: ' ', True: 'red', False: 'white'}
             hole_description = board_.board[c[0]][c[1]]
             button_colour =  board_viz[hole_description]
 
@@ -152,7 +151,6 @@ class Application(tk.Frame):
         tk.Button(self, text="Load", command=self.load_moves).grid(row=7, column=2)
         tk.Button(self, text="Save", command=peg.auto_export_to_file).grid(row=7, column=3)
         tk.Button(self, text="Quit", command=self.quit_game).grid(row=7, column=4)
-        #tk.Button(self, text="RESET", command=restart_game()).grid(row=7, column=5)
 
 
 def set_coords(coords, state_of_play_input):
@@ -161,17 +159,25 @@ def set_coords(coords, state_of_play_input):
     global dest_coords_input
     global state_of_play
 
-    if state_of_play_input == 0:
-        org_coords_input = coords
-        board_.board[coords[0]][coords[1]] = 'P'  #  is for pending next
-        root.create_widgets()
-        state_of_play = 1
+    if state_of_play_input == 0:  #i.e. just to origin button has been pressed
+        if board_.board[coords[0]][coords[1]]:  # First button pressed must be full
+            org_coords_input = coords
+            root.create_widgets()
+            state_of_play = 1
+        else:
+            tk.messagebox.showinfo(title="Player Information",
+                                   message="Origin must be filled")
 
-    elif state_of_play_input == 1:
-        dest_coords_input = coords
-        game_play(org_coords_input, dest_coords_input)
-        state_of_play = 0
-
+    else:  # assuming that it must be state_of_play ==1
+        if not board_.board[coords[0]][coords[1]]:  #second button (destination) must be empty)
+            dest_coords_input = coords
+            game_play(org_coords_input, dest_coords_input)
+            root.create_widgets()
+            state_of_play = 0
+        else:
+            state_of_play = 0
+            tk.messagebox.showinfo(title="Player Information",
+                                   message="Destination must be empty")
 
 def game_play(org_coords, dest_coords):
     '''The purpose of this function is to call all of the functions created for the text game to:
@@ -185,8 +191,9 @@ def game_play(org_coords, dest_coords):
     org_char = list(peg_pos_dict.keys())[list(peg_pos_dict.values()).index(org_coords)]
     dest_char = list(peg_pos_dict.keys())[list(peg_pos_dict.values()).index(dest_coords)]
 
-    if not peg.validated_middle_peg(org_coords, dest_coords)[0]:
+    if not peg.validated_middle_peg(org_coords, dest_coords)[0]:  # unsuccessful
         state_of_play = 0
+        root.create_widgets()
         tk.messagebox.showinfo(title="Player Information",
                                message="Not a valid move. Select your next origin peg")
 
@@ -196,26 +203,25 @@ def game_play(org_coords, dest_coords):
 
         if board_.is_middle_filled(org_coords, board_.board, move_direction) \
                 and board_.is_destination_empty(dest_coords, board_.board) \
-                and board_.is_origin_filled(org_coords, board_.board):
+                and board_.is_origin_filled(org_coords, board_.board): #success
 
             peg.update_board_pegs(org_coords, move_direction, dest_coords, board_.board)
             peg.add_move(org_char, dest_char)
             pegs_on_board -= 1
             state_of_play = 0
             root.display_label()
-
             root.create_widgets()
+
             if pegs_on_board == 1:
                 tk.messagebox.showinfo(title="Winner!", message="Great Scott - you've done it! Well done!")
                 peg.auto_export_to_file()
 
-def restart_game():
-    """Restarts the game program. Will create an autosave file log"""
-    #peg.auto_export_to_file
-    python = sys.executable
-    os.execl(python, python, * sys.argv)
-    #root.destroy()
-    #os.startfile("main.py")
+        else:  # move not allowed
+            tk.messagebox.showinfo(title="Warning", message="Move not allowed")
+
+    else:  # unsuccessful
+        tk.messagebox.showinfo(title="Player Information",
+                               message="Please try another move")
 
 
 
