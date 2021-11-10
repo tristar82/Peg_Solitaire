@@ -26,7 +26,7 @@ The purpose of this assignment was to create a functioning game of Peg Solitaire
 * To run the Windows GUI (advanced) version of the game, run the ***"GUI_main.py"*** in the Python terminal. This will launch a new window with buttons for different operations.
 
 **Testing**
-* To ensure that both the Text and GUI versions can handle solution import files, please refer to the ***garbage_moves.txt*** and ***garbage_moves2.txt*** files respectively. This can be imported and handled correctly.
+* To ensure that both the Text and GUI versions can handle solution import files, please refer to the ***garbage_moves.txt*** and ***garbage_moves2.txt*** files respectively. These = can each be imported and handled correctly.
 
 
 ## Game Operation
