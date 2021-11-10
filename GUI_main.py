@@ -46,7 +46,7 @@ class Application(tk.Frame):
     def display_label(self):
         '''Function to display number of pegs remaining'''
         tk.Label(text="{}".format(pegs_on_board),
-                 font=("Helvetica", 14)).grid(row=7, column=0)
+                 font=("Arial", 14)).grid(row=7, column=0)
 
     def create_grid_coords(self):
         '''Function to create board grid coordinates for GUI'''
