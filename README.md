@@ -25,11 +25,15 @@ The purpose of this assignment was to create a functioning game of Peg Solitaire
 * To run the TEXT based version of the game, run the ***"main.py"*** in the Python terminal. This will load the menu to faciliate game play. 
 * To run the Windows GUI (advanced) version of the game, run the ***"GUI_main.py"*** in the Python terminal. This will launch a new window with buttons for different operations.
 
+**Testing**
+* To ensure that both the Text and GUI versions can handle solution import files, please refer to the ***garbage_moves.txt*** and ***garbage_moves2.txt*** files respectively. This can be imported and handled correctly.
+
+
 ## Game Operation
 #### Text Version
 Once loaded, the game will ask the player to determine what they would like to do. The options are to Load a (**S**)oltion File, (**P**)lay the Game, Read the (**R**)ules or (**E**)xit.
-After loading a solution file, the player can enter the next move of their own choice (provided there are pegs remaining).
-Legal moves will be in the format 'ox' or 'ex'
+After loading a solution file (which is assumed to be in the current working directory), the player can enter the next move of their own choice (provided there are pegs remaining).
+Legal moves will be in the format 'ox' or 'ex'.
 
 #### GUI Advanced Version
 The game will load and display the board; red buttons indicate pegs and white are holes. Simply click first on the origin then the destination buttons; the computer will assess the move and reduce the peg count (displayed at the bottom of the screen) if successful.
