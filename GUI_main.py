@@ -3,7 +3,7 @@
 import tkinter as tk
 from tkinter.filedialog import askopenfilename
 from tkinter.messagebox import showerror
-
+import sys ##
 import os
 import datetime
 
@@ -136,7 +136,7 @@ class Application(tk.Frame):
         self.chars_copy = self.chars.copy()
         for c in self.coords:
             button_letter = self.chars_copy.pop(0)
-            board_viz = {None: ' ', True: 'red', False: 'white'}
+            board_viz = {None: ' ', True: 'red', False: 'white', 'P': 'yellow'}
             hole_description = board_.board[c[0]][c[1]]
             button_colour =  board_viz[hole_description]
 
@@ -152,6 +152,8 @@ class Application(tk.Frame):
         tk.Button(self, text="Load", command=self.load_moves).grid(row=7, column=2)
         tk.Button(self, text="Save", command=peg.auto_export_to_file).grid(row=7, column=3)
         tk.Button(self, text="Quit", command=self.quit_game).grid(row=7, column=4)
+        #tk.Button(self, text="RESET", command=restart_game()).grid(row=7, column=5)
+
 
 def set_coords(coords, state_of_play_input):
     '''Function to capture the coords and their identity i.e. origin or destination'''
@@ -161,6 +163,8 @@ def set_coords(coords, state_of_play_input):
 
     if state_of_play_input == 0:
         org_coords_input = coords
+        board_.board[coords[0]][coords[1]] = 'P'  #  is for pending next
+        root.create_widgets()
         state_of_play = 1
 
     elif state_of_play_input == 1:
@@ -204,6 +208,15 @@ def game_play(org_coords, dest_coords):
             if pegs_on_board == 1:
                 tk.messagebox.showinfo(title="Winner!", message="Great Scott - you've done it! Well done!")
                 peg.auto_export_to_file()
+
+def restart_game():
+    """Restarts the game program. Will create an autosave file log"""
+    #peg.auto_export_to_file
+    python = sys.executable
+    os.execl(python, python, * sys.argv)
+    #root.destroy()
+    #os.startfile("main.py")
+
 
 
 root = tk.Tk()
